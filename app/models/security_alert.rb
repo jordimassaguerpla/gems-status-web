@@ -1,15 +1,15 @@
 class SecurityAlert < ActiveRecord::Base
   belongs_to :ruby_gem
   belongs_to :ruby_application
+  STATUS_CODES = {
+    0 => "Pending",
+    1 => "Confirmed",
+    2 => "Ignored",
+    3 => "Refused"
+  }
 
   def status_text
-    status_codes = {
-      0 => "Pending",
-      1 => "Confirmed",
-      2 => "Ignored",
-      3 => "Refused"
-    }
-    status_codes[self.status]
+    STATUS_CODES[self.status]
   end
 
   def short_desc

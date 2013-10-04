@@ -1,0 +1,22 @@
+<%= form_for(@security_alert) do |f| %>
+  <% if @security_alert.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@security_alert.errors.count, "error") %> prohibited this security alert from being saved:</h2>
+
+      <ul>
+      <% @security_alert.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :status %>
+    <% values = SecurityAlert::STATUS_CODES.to_a.map {|x| x.reverse} %>
+    <%= f.select(:status, options_for_select(values, @security_alert.status)) %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
