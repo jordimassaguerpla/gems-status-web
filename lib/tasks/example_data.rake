@@ -50,6 +50,35 @@ namespace :db do
       sa.version_fix = "1.1.1"
       sa.ruby_gem = RubyGem.find_by_name("rails")
       sa.ruby_application = RubyApplication.find_by_name("ui-server")
+      sa.status = 0
+      sa.save
+      sa = SecurityAlert.new
+      sa.desc = "CVEYYY: security alert , bla bla bla"
+      sa.version_fix = "1.2.1"
+      sa.ruby_gem = RubyGem.find_by_name("rails")
+      sa.ruby_application = RubyApplication.find_by_name("ui-server")
+      sa.status = 1
+      sa.save
+      sa = SecurityAlert.new
+      sa.desc = "CVEZZZ: security alert , bla bla bla"
+      sa.version_fix = ""
+      sa.ruby_gem = RubyGem.find_by_name("rails")
+      sa.ruby_application = RubyApplication.find_by_name("ui-server")
+      sa.status = 2
+      sa.save
+      sa = SecurityAlert.new
+      sa.desc = "CVEZZZ: security alert , bla bla bla"
+      sa.version_fix = ""
+      sa.ruby_gem = RubyGem.find_by_name("rails")
+      sa.ruby_application = RubyApplication.find_by_name("runner")
+      sa.status = 2
+      sa.save
+      sa = SecurityAlert.new
+      sa.desc = "CVEAAA: security alert , bla bla bla"
+      sa.version_fix = ""
+      sa.ruby_gem = RubyGem.find_by_name("curb")
+      sa.ruby_application = RubyApplication.find_by_name("runner")
+      sa.status = 3
       sa.save
     end
   end
