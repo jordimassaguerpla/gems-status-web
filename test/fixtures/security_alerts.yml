@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  ruby_gem: :one
+  ruby_application_id: 
+  desc: MyString
+  version_fix: MyString
+  ruby_application: :one
+
+two:
+  ruby_gem: :two
+  ruby_application_id: 
+  desc: MyString
+  version_fix: MyString
+  ruby_application: :two

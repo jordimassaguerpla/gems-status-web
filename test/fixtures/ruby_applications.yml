@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  filename: MyString
+  gems_url: MyString
+  user: :one
+
+two:
+  name: MyString
+  filename: MyString
+  gems_url: MyString
+  user: :two

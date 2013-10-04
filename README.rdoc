@@ -1,0 +1,30 @@
+== README
+
+This README documents whatever steps are necessary to get the
+application up and running.
+
+
+* Ruby version
+  1.9.3
+
+* System dependencies
+  None
+
+* Configuration
+  Nothing specific
+
+* Database creation
+  run "rake db"
+
+* Database initialization
+  run "rake db:migrate"
+
+* How to run the test suite
+  run "rake"
+
+* Services (job queues, cache servers, search engines, etc.)
+  None
+
+* Deployment instructions
+  Not yet
+

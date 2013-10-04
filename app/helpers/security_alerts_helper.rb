@@ -1,0 +1,2 @@
+module SecurityAlertsHelper
+end

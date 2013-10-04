@@ -1,0 +1,16 @@
+<p id="notice"><%= notice %></p>
+<%= link_to "Users", users_path %> >
+<%= @user.name %>
+
+<p>
+  <strong>Name:</strong>
+  <%= @user.name %>
+  <br/>
+  <strong>Ruby applications</strong>
+  <ul>
+  <% @user.ruby_applications.each do |ra| %>
+    <li><%= link_to ra.name, ruby_application_path(ra) %></li>
+  <% end %>
+</ul>
+</p>
+
