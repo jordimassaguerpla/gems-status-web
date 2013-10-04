@@ -1,5 +1,12 @@
-require "simplecov"
-SimpleCov.start 'rails'
+require 'simplecov'
+require 'coveralls'
+
+if Coveralls.should_run?
+  Coveralls.wear!
+else
+  SimpleCov.start
+end
+
 ENV["RAILS_ENV"] ||= "test"
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
