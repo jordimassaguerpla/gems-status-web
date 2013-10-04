@@ -22,18 +22,16 @@
   <ul>
     <% @ruby_application.ruby_gems.each do |rg| %>
       <li><%= rg.name %> <%= rg.version %> <%= rg.license %></li>
-      <ul>
-        <% rg.security_alerts.each do |sa| %>
-          <li>
-            <table>
-              <tr>
-                <td><%= link_to sa.short_desc, security_alert_path(sa) %></td>
-                <td>Fixed in: <%= sa.version_fix %></td>
-              </tr>
-            </table>
-        </li>
-        <% end %>
-      </ul>
+        <table>
+          <% @ruby_application.security_alerts.each do |sa| %>
+            <% next if sa.ruby_gem.name != rg.name %>
+            <tr>
+              <td><%= link_to sa.short_desc, security_alert_path(sa) %></td>
+              <td>Status: <%= sa.status_text %></td>
+              <td>Fixed in: <%= sa.version_fix %></td>
+            </tr>
+          <% end %>
+        </table>
     <% end %>
   </ul>
 </p>
