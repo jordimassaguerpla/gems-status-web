@@ -43,6 +43,20 @@ GEM
       thor
     erubis (2.7.0)
     execjs (2.0.2)
+    gems-status (1.68.0)
+      bundler
+      git
+      gmail
+      json
+      mercurial-ruby
+      xml-simple
+    git (1.2.6)
+    gmail (0.4.0)
+      gmail_xoauth (>= 0.3.0)
+      mail (>= 2.2.1)
+      mime (>= 0.1)
+    gmail_xoauth (0.4.1)
+      oauth (>= 0.3.6)
     hike (1.2.3)
     i18n (0.6.5)
     jbuilder (1.5.1)
@@ -55,9 +69,14 @@ GEM
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
+    mercurial-ruby (0.7.11)
+      open4 (~> 1.3.0)
+    mime (0.1)
     mime-types (1.25)
     minitest (4.7.5)
     multi_json (1.8.0)
+    oauth (0.4.7)
+    open4 (1.3.0)
     polyglot (0.3.3)
     rack (1.5.2)
     rack-test (0.6.2)
@@ -118,6 +137,7 @@ GEM
     uglifier (2.2.1)
       execjs (>= 0.3.0)
       multi_json (~> 1.0, >= 1.0.2)
+    xml-simple (1.1.2)
 
 PLATFORMS
   ruby
@@ -125,6 +145,7 @@ PLATFORMS
 DEPENDENCIES
   coffee-rails (~> 4.0.0)
   coveralls
+  gems-status
   jbuilder (~> 1.2)
   jquery-rails
   rails (= 4.0.0)

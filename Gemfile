@@ -45,4 +45,4 @@ end
 # gem 'debugger', group: [:development, :test]
 gem 'simplecov', :require => false, :group => :test
 gem 'coveralls', :require => false, :group => :test
-
+gem 'gems-status'
