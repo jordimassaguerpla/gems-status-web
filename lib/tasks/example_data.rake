@@ -65,6 +65,7 @@ namespace :db do
       sa.ruby_gem = RubyGem.find_by_name("rails")
       sa.ruby_application = RubyApplication.find_by_name("ui-server")
       sa.status = 2
+      sa.comment = "This is a false positive because it refers to documentation"
       sa.save
       sa = SecurityAlert.new
       sa.desc = "CVEZZZ: security alert , bla bla bla"

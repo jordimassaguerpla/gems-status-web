@@ -15,6 +15,8 @@
     <%= f.label :status %>
     <% values = SecurityAlert::STATUS_CODES.to_a.map {|x| x.reverse} %>
     <%= f.select(:status, options_for_select(values, @security_alert.status)) %>
+    <%= f.label :comment %>
+    <%= f.text_field :comment %>
   </div>
   <div class="actions">
     <%= f.submit %>
