@@ -32,6 +32,6 @@ class SecurityAlertsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def security_alert_params
-      params.require(:security_alert).permit(:ruby_gem_id, :ruby_application_id, :desc, :version_fix, :status)
+      params.require(:security_alert).permit(:ruby_gem_id, :ruby_application_id, :desc, :version_fix, :status, :comment)
     end
 end
