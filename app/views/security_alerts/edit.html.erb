@@ -9,9 +9,7 @@
 What others have selected:
 </p>
 <p>
-<% @security_alert.ruby_gem.security_alerts.each do |sa| %>
-  <% next if @security_alert == sa %>
-  <% next if @security_alert.desc != sa.desc %>
+<% @security_alert.ruby_gem.security_alerts.where("desc == '#{@security_alert.desc}' and id != '#{@security_alert.id}'").each do |sa| %>
   <%= sa.ruby_application.user.name %>:
   <%= sa.ruby_application.name %> = 
   <%= sa.status_text %>

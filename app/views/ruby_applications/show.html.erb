@@ -23,8 +23,7 @@
     <% @ruby_application.ruby_gems.each do |rg| %>
       <li><%= rg.name %> <%= rg.version %> <%= rg.license %></li>
         <table>
-          <% @ruby_application.security_alerts.each do |sa| %>
-            <% next if sa.ruby_gem.name != rg.name %>
+          <% @ruby_application.security_alerts.where("ruby_gem_id == '?'", rg.id).each do |sa| %>
             <tr>
               <td><%= link_to sa.short_desc, security_alert_path(sa) %></td>
               <td>Status: <%= sa.status_text %></td>
