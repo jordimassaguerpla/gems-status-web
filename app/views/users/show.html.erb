@@ -9,8 +9,14 @@
   <strong>Ruby applications</strong>
   <ul>
   <% @user.ruby_applications.each do |ra| %>
-    <li><%= link_to ra.name, ruby_application_path(ra) %></li>
+    <li>
+      <%= link_to ra.name, ruby_application_path(ra) %> |
+      <%= link_to "Edit", edit_ruby_application_path(ra) %> |
+      <%= link_to "Destroy", ra, method: :delete, data: { confirm: "Are you sure?" } %>
+    </li>
   <% end %>
-</ul>
+  </ul>
+  <br>
+  <%= link_to 'New ruby application', new_ruby_application_path + "?user_id=#{@user.id}" %>
 </p>
 
