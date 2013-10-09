@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131007094911) do
+ActiveRecord::Schema.define(version: 20131009173200) do
 
   create_table "ruby_application_ruby_gem_relationships", force: true do |t|
     t.integer  "ruby_application_id"
@@ -52,6 +52,7 @@ ActiveRecord::Schema.define(version: 20131007094911) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "email"
   end
 
 end

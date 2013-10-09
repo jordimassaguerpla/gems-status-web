@@ -11,9 +11,11 @@ namespace :db do
       # users
       u = User.new
       u.name = "Forrest Gump"
+      u.email = "fg@nodomain.no"
       u.save
       u = User.new
       u.name = "Dan Taylor"
+      u.email = "dt@nodomain.no"
       u.save
 
       # ruby applications
