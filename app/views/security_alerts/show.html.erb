@@ -11,7 +11,7 @@
 
 <p>
   <strong>Status:</strong>
-  <%= link_to @security_alert.status_text, edit_security_alert_path(@security_alert) %>
+  <%= @security_alert.status_text %>
 </p>
 <p>
   <strong>Version fix:</strong>
@@ -21,3 +21,4 @@
   <strong>Comment</strong>
   <%= @security_alert.comment %>
 </p>
+  <%= link_to "edit", edit_security_alert_path(@security_alert) %>

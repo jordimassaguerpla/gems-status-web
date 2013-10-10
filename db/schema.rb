@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131009173200) do
+ActiveRecord::Schema.define(version: 20131010135853) do
 
   create_table "ruby_application_ruby_gem_relationships", force: true do |t|
     t.integer  "ruby_application_id"
@@ -46,6 +46,13 @@ ActiveRecord::Schema.define(version: 20131009173200) do
     t.datetime "updated_at"
     t.integer  "status"
     t.string   "comment"
+  end
+
+  create_table "source_repos", force: true do |t|
+    t.string   "name"
+    t.string   "url"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", force: true do |t|

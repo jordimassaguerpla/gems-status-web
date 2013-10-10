@@ -23,8 +23,8 @@ application up and running.
   run "rake"
 
 * Services (job queues, cache servers, search engines, etc.)
-  None
+  Run "rake gems_status:run" on a crontab in order to make gems-status insert data in the database
 
 * Deployment instructions
-  Not yet
+  rename config/application.yml.example to config/application.yml and update the EMAIL_USERNAME and EMAIL_PASSWORD
 

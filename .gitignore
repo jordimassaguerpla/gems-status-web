@@ -16,4 +16,6 @@ rerun.txt
 pickle-email-*.html
 TODO
 *.swp
+config/application.yml
+build_security_messages_check/
 

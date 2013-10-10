@@ -1,4 +1,6 @@
 GemsStatusWeb::Application.routes.draw do
+  resources :source_repos
+
   resources :security_alerts
 
   resources :users

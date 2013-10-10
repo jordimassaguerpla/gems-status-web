@@ -18,7 +18,26 @@
     <%= f.label :comment %>
     <%= f.text_field :comment %>
   </div>
+  <div class="field">
+    <%= f.label :version_fix %>
+    <%= f.text_field :version_fix %>
+  </div>
   <div class="actions">
     <%= f.submit %>
   </div>
 <% end %>
+<p>
+  ---------------
+  <br/>
+ What others have said:
+</p>
+<p>
+<% @security_alert.ruby_gem.security_alerts.where("desc == '#{@security_alert.desc}' and id != '#{@security_alert.id}'").each do |sa| %>
+  <%= sa.status_text %>
+  <%= sa.comment %><br/>
+  Fixed in:
+  <%= sa.version_fix %>
+  <br/>
+  ---------------
+<% end %>
+</p>

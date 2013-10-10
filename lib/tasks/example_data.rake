@@ -21,14 +21,14 @@ namespace :db do
       # ruby applications
       ra = RubyApplication.new
       ra.name = "ui-server"
-      ra.filename = "/tmp/ui-server/Gemfile.lock"
-      ra.gems_url = "https://rubygems.org"
+      ra.filename = File.expand_path('../../../test/files/1/Gemfile.lock', __FILE__)
+      ra.gems_url = "https://rubygems.org/gems"
       ra.user = User.find_by_name "Forrest Gump"
       ra.save
       ra = RubyApplication.new
       ra.name = "runner"
-      ra.filename = "/tmp/runner/Gemfile.lock"
-      ra.gems_url = "https://rubygems.org"
+      ra.filename = File.expand_path('../../../test/files/2/Gemfile.lock', __FILE__)
+      ra.gems_url = "https://rubygems.org/gems"
       ra.user = User.find_by_name "Dan Taylor"
       ra.save
 

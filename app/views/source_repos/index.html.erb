@@ -1,0 +1,29 @@
+<h1>Listing source_repos</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Url</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @source_repos.each do |source_repo| %>
+      <tr>
+        <td><%= source_repo.name %></td>
+        <td><%= source_repo.url %></td>
+        <td><%= link_to 'Show', source_repo %></td>
+        <td><%= link_to 'Edit', edit_source_repo_path(source_repo) %></td>
+        <td><%= link_to 'Destroy', source_repo, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Source repo', new_source_repo_path %>

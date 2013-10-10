@@ -35,15 +35,22 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.6.3)
+    columnize (0.3.6)
     coveralls (0.7.0)
       multi_json (~> 1.3)
       rest-client
       simplecov (>= 0.7)
       term-ansicolor
       thor
+    debugger (1.6.2)
+      columnize (>= 0.3.1)
+      debugger-linecache (~> 1.2.0)
+      debugger-ruby_core_source (~> 1.2.3)
+    debugger-linecache (1.2.0)
+    debugger-ruby_core_source (1.2.3)
     erubis (2.7.0)
     execjs (2.0.2)
-    gems-status (1.69.0)
+    gems-status (1.70.0)
       bundler
       git
       gmail
@@ -145,6 +152,7 @@ PLATFORMS
 DEPENDENCIES
   coffee-rails (~> 4.0.0)
   coveralls
+  debugger
   gems-status
   jbuilder (~> 1.2)
   jquery-rails

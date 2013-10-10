@@ -46,3 +46,5 @@ end
 gem 'simplecov', :require => false, :group => :test
 gem 'coveralls', :require => false, :group => :test
 gem 'gems-status'
+gem 'debugger', :group => :development
+

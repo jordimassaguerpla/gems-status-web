@@ -1,0 +1,9 @@
+GEM
+  specs:
+    curb (0.7.18)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  curb

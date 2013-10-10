@@ -3,17 +3,9 @@
 <%= link_to @security_alert.ruby_application.name, ruby_application_path(@security_alert.ruby_application) %> >
 <%= @security_alert.short_desc %>
 <p>
+  <strong>Desc:</strong>
+  <%= @security_alert.desc %>
+</p>
+<p>
 <%= render 'form' %>
-</p>
-<p>
-What others have selected:
-</p>
-<p>
-<% @security_alert.ruby_gem.security_alerts.where("desc == '#{@security_alert.desc}' and id != '#{@security_alert.id}'").each do |sa| %>
-  <%= sa.ruby_application.user.name %>:
-  <%= sa.ruby_application.name %> = 
-  <%= sa.status_text %>
-  <%= sa.comment %>
-  <br/>
-<% end %>
 </p>
