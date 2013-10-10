@@ -6,7 +6,12 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(:default, Rails.env)
 
-CONFIG = YAML.load(File.read(File.expand_path('../application.yml', __FILE__)))
+config_file = File.expand_path('../application.yml', __FILE__)
+if File.exists?(config_file)
+  CONFIG = YAML.load(File.read(config_file))
+else
+  CONFIG = {}
+end
 
 module GemsStatusWeb
   class Application < Rails::Application
