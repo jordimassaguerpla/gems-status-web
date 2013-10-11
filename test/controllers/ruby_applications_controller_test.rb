@@ -3,6 +3,7 @@ require 'test_helper'
 class RubyApplicationsControllerTest < ActionController::TestCase
   setup do
     @ruby_application = ruby_applications(:one)
+    session[:user_id] = User.find_by_name("one")
   end
 
   test "should show ruby_application" do
@@ -11,13 +12,11 @@ class RubyApplicationsControllerTest < ActionController::TestCase
   end
 
   test "should get new" do
-    session[:user_id] = User.find_by_name("one")
     get :new
     assert_response :success
   end
 
   test "should create ruby application" do
-    session[:user_id] = User.find_by_name("one")
     assert_difference("RubyApplication.count") do
       post :create, ruby_application: { name: @ruby_application.name, filename: @ruby_application.filename, gems_url: @ruby_application.gems_url }
     end

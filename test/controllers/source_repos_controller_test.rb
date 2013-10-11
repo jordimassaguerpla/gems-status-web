@@ -3,6 +3,7 @@ require 'test_helper'
 class SourceReposControllerTest < ActionController::TestCase
   setup do
     @source_repo = source_repos(:one)
+    session[:user_id] = User.find_by_name("one")
   end
 
   test "should get index" do

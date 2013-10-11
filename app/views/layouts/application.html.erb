@@ -7,6 +7,11 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+<% if current_user %>
+  Logged in as 
+  <%= current_user.name %> |
+  <%= link_to "logout", session_path("current"), method: "delete" %>
+<% end %>
 
 <%= yield %>
 

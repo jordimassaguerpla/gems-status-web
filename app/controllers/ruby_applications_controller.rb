@@ -1,5 +1,6 @@
 class RubyApplicationsController < ApplicationController
   before_action :set_ruby_application, only: [:show, :edit, :update]
+  skip_before_filter :authorize
 
   # GET /ruby_applications/1
   # GET /ruby_applications/1.json
@@ -45,14 +46,14 @@ class RubyApplicationsController < ApplicationController
   # POST /ruby_application
   # POST /ruby_application.json
   def create
-    if !session[:user_id] || !User.exists?(session[:user_id])
+    if !current_user
       respond_to do |format|
         format.html { render action: 'new' }
         format.json { render json: @ruby_application.errors, status: :unprocessable_entity }
       end
     end
     @ruby_application = RubyApplication.new(ruby_application_params)
-    @ruby_application.user = User.find(session[:user_id])
+    @ruby_application.user = current_user
 
     respond_to do |format|
       if @ruby_application.save

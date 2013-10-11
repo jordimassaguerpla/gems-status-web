@@ -1,6 +1,8 @@
 <p id="notice"><%= notice %></p>
-<%= link_to "Users", users_path %> >
-<%= @user.name %>
+<% if is_admin? %>
+  <%= link_to "Users", users_path %> >
+  <%= @user.name %>
+<% end %>
 
 <p>
   <strong>Name:</strong>
@@ -20,6 +22,6 @@
   <% end %>
   </ul>
   <br>
-  <%= link_to 'New ruby application', new_ruby_application_path + "?user_id=#{@user.id}" %>
+  <%= link_to 'New ruby application', new_ruby_application_path %>
 </p>
 

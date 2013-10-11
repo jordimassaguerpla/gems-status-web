@@ -1,5 +1,7 @@
 <p id="notice"><%= notice %></p>
-<%= link_to "Users", users_path %> > 
+<% if is_admin? %>
+  <%= link_to "Users", users_path %> >
+<% end %>
 <%= link_to @ruby_application.user.name, user_path(@ruby_application.user) %> >
 <%= @ruby_application.name %>
 

@@ -1,4 +1,5 @@
 GemsStatusWeb::Application.routes.draw do
+  resources :sessions
   resources :source_repos
 
   resources :security_alerts
@@ -7,7 +8,7 @@ GemsStatusWeb::Application.routes.draw do
 
   resources :ruby_applications
 
-  root 'users#index'
+  root 'sessions#new'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

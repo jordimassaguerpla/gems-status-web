@@ -3,6 +3,7 @@
 one:
   name: one
   email: email_one
+  admin: 1
 
 two:
   name: two

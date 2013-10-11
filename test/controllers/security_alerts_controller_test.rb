@@ -3,6 +3,7 @@ require 'test_helper'
 class SecurityAlertsControllerTest < ActionController::TestCase
   setup do
     @security_alert = security_alerts(:one)
+    session[:user_id] = User.find_by_name("one")
   end
 
   test "should show security_alert" do
