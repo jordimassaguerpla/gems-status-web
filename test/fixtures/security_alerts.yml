@@ -4,12 +4,14 @@ one:
   ruby_gem: :one
   ruby_application_id: 
   desc: MyString
-  version_fix: MyString
+  version_fix: 1.1.1
   ruby_application: :one
+  status: 0
 
 two:
   ruby_gem: :two
   ruby_application_id: 
   desc: MyString
-  version_fix: MyString
+  version_fix: 2.2.2
   ruby_application: :two
+  status: 0

@@ -2,6 +2,8 @@
 
 one:
   name: one
+  email: email_one
 
 two:
   name: two
+  email: email_two

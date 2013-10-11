@@ -19,7 +19,7 @@ class RubyApplicationsControllerTest < ActionController::TestCase
   test "should create ruby application" do
     session[:user_id] = User.find_by_name("one")
     assert_difference("RubyApplication.count") do
-      post :create, ruby_application: { name: @ruby_application.name }
+      post :create, ruby_application: { name: @ruby_application.name, filename: @ruby_application.filename, gems_url: @ruby_application.gems_url }
     end
     assert_redirected_to user_path(User.find_by_name("one"))
   end
