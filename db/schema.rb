@@ -11,7 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131011155716) do
+ActiveRecord::Schema.define(version: 20131014173321) do
+
+  create_table "last_runs", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "ruby_application_ruby_gem_relationships", force: true do |t|
     t.integer  "ruby_application_id"

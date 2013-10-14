@@ -18,5 +18,14 @@
 --------------------<br/>
 Source code: <a href="http://www.github.com/jordimassaguerpla/gems-status-web">http://www.github.com/jordimassaguerpla/gems-status-web</a>
 </p>
+<p>
+Analysis done by <a href="http://www.github.com/jordimassaguerpla/gems-status/">gems status <%= GemsStatus::VERSION %></a>
+<br/>
+<% if LastRun.last %>
+  Last run <%= LastRun.last.created_at %>
+  <br/>
+  Run <%= LastRun.count %> times since <%= LastRun.first.created_at %>
+<% end %>
+</p>
 </body>
 </html>

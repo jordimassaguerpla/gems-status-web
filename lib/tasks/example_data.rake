@@ -85,6 +85,8 @@ namespace :db do
       sa.ruby_application = RubyApplication.find_by_name("runner")
       sa.status = 0
       sa.save
+      lr = LastRun.new
+      lr.save
     end
   end
 end

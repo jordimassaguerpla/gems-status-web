@@ -59,5 +59,7 @@ namespace :gems_status do
         end
       end
     end
+    lr = LastRun.new
+    lr.save
   end
 end
