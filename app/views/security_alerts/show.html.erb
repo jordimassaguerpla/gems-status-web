@@ -1,10 +1,15 @@
-<p id="notice"><%= notice %></p>
 <% if is_admin? %>
   <%= link_to "Users", users_path %> > 
 <% end %>
-<%= link_to @security_alert.ruby_application.user.name, user_path(@security_alert.ruby_application.user) %> >
-<%= link_to @security_alert.ruby_application.name, ruby_application_path(@security_alert.ruby_application) %> >
-<%= @security_alert.short_desc %>
+<% if is_from_security_team? %>
+  <%= @security_alert.ruby_application.user.name %> >
+  <%= @security_alert.ruby_application.name %> >
+  <%= @security_alert.short_desc %>
+<% else %>
+  <%= link_to @security_alert.ruby_application.user.name, user_path(@security_alert.ruby_application.user) %> >
+  <%= link_to @security_alert.ruby_application.name, ruby_application_path(@security_alert.ruby_application) %> >
+  <%= @security_alert.short_desc %>
+<% end %>
 
 <p>
   <strong>Desc:</strong>
@@ -23,4 +28,6 @@
   <strong>Comment</strong>
   <%= @security_alert.comment %>
 </p>
-  <%= link_to "edit", edit_security_alert_path(@security_alert) %>
+  <% if !is_from_security_team? %>
+    <%= link_to "edit", edit_security_alert_path(@security_alert) %>
+  <% end %>

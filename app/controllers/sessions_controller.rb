@@ -5,6 +5,8 @@ class SessionsController < ApplicationController
     if current_user
       if is_admin?
         redirect_to users_path
+      elsif is_from_security_team?
+        redirect_to reports_path
       else
         redirect_to user_path(current_user)
       end
@@ -17,6 +19,8 @@ class SessionsController < ApplicationController
       session[:user_id] = user.id
       if is_admin?
         redirect_to users_path
+      elsif is_from_security_team?
+        redirect_to reports_path
       else
         redirect_to user_path(current_user)
       end

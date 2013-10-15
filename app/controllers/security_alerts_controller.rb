@@ -1,6 +1,5 @@
 class SecurityAlertsController < ApplicationController
   before_action :set_security_alert, only: [:show, :edit, :update]
-  skip_before_filter :authorize
 
   # GET /security_alerts/1
   # GET /security_alerts/1.json

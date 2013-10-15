@@ -7,13 +7,24 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+<p id="notice"><%= notice %></p>
+<p class="error"><%= flash[:error] %></p>
 <% if current_user %>
   Logged in as 
   <%= current_user.name %> |
   <%= link_to "logout", session_path("current"), method: "delete" %>
 <% end %>
 
+<% if is_from_security_team? %>
+  <br/>
+  security team member
+<% end %>
+<% if is_admin? %>
+  <br/>
+  This user is admin
+<% end %>
 <%= yield %>
+<br>
 <p>
 --------------------<br/>
 Source code: <a href="http://www.github.com/jordimassaguerpla/gems-status-web">http://www.github.com/jordimassaguerpla/gems-status-web</a>

@@ -1,30 +1,11 @@
-<% if is_admin? %>
-  <%= link_to "Users", users_path %> >
-<% end %>
-<%= link_to @ruby_application.user.name, user_path(@ruby_application.user) %> >
-<%= @ruby_application.name %>
-
 <p>
-  <strong>Name:</strong>
-  <%= @ruby_application.name %>
-</p>
-
-<p>
-  <strong>Filename:</strong>
-  <%= @ruby_application.filename %>
-</p>
-
-<p>
-  <strong>Gems url:</strong>
-  <%= @ruby_application.gems_url %>
-</p>
-<p>
-  <strong>gems:</strong>
+<% RubyApplication.all.each do |ra|%>
+  <%= ra.user.name %>(<%= ra.user.email %>): <%= ra.name %><br>
   <ul>
-    <% @ruby_application.ruby_gems.each do |rg| %>
+    <% ra.ruby_gems.each do |rg| %>
       <li><%= rg.name %> <%= rg.version %> <%= rg.license %></li>
         <table>
-          <% @ruby_application.security_alerts.where("ruby_gem_id == '?'", rg.id).each do |sa| %>
+          <% ra.security_alerts.where("ruby_gem_id == '?'", rg.id).each do |sa| %>
             <% next if sa.version_fix && sa.version_fix != "" && Gem::Version.new(sa.version_fix) < Gem::Version.new(rg.version) %>
             <% next if SecurityAlert::STATUS_CODES[sa.status] == "Ignored" %>
             <% next if SecurityAlert::STATUS_CODES[sa.status] == "Refused" %>
@@ -37,4 +18,7 @@
         </table>
     <% end %>
   </ul>
+</p>
+
+<% end %>
 </p>

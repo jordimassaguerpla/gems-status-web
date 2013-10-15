@@ -1,6 +1,5 @@
 class RubyApplicationsController < ApplicationController
   before_action :set_ruby_application, only: [:show, :edit, :update]
-  skip_before_filter :authorize
 
   # GET /ruby_applications/1
   # GET /ruby_applications/1.json
