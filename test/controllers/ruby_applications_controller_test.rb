@@ -34,4 +34,9 @@ class RubyApplicationsControllerTest < ActionController::TestCase
     end
     assert_redirected_to user_path @ruby_application.user
   end
+
+  test "should update ruby application" do
+    patch :update, id: @ruby_application, ruby_application: { name: @ruby_application.name, filename: @ruby_application.filename, gems_url: @ruby_application.gems_url }
+    assert_redirected_to user_path(@ruby_application.user)
+  end
 end
