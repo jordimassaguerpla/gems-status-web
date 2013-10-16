@@ -45,12 +45,6 @@ class RubyApplicationsController < ApplicationController
   # POST /ruby_application
   # POST /ruby_application.json
   def create
-    if !current_user
-      respond_to do |format|
-        format.html { render action: 'new' }
-        format.json { render json: @ruby_application.errors, status: :unprocessable_entity }
-      end
-    end
     @ruby_application = RubyApplication.new(ruby_application_params)
     @ruby_application.user = current_user
 
