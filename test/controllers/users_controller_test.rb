@@ -2,14 +2,20 @@ require 'test_helper'
 
 class UsersControllerTest < ActionController::TestCase
   setup do
-    @user = users(:one)
-    session[:user_id] = User.find_by_name("one")
+    @user = users(:two)
+    session[:user_id] = User.find_by_name("two")
   end
 
-  test "should get index" do
+  test "admin should get index" do
+    session[:user_id] = users(:one).id
     get :index
     assert_response :success
     assert_not_nil assigns(:users)
+  end
+
+  test "member should not get index" do
+    get :index
+    assert_redirected_to root_url
   end
 
   test "should show user" do
@@ -17,12 +23,25 @@ class UsersControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test "should get new" do
+  test "admin should get new" do
+    session[:user_id] = users(:one).id
     get :new
     assert_response :success
   end
 
-  test "should create user" do
+  test "member should not get new" do
+    get :new
+    assert_redirected_to root_url
+  end
+
+  test "user should not create user" do
+    expected = User.count
+    post :create, user: { name: @user.name, email: "new email", password: "secret", password_confirmation: "secret"} 
+    assert_equal expected, User.count
+    assert_redirected_to root_url
+  end
+  test "admin should create user" do
+    session[:user_id] = users(:one)
     assert_difference("User.count") do
       post :create, user: { name: @user.name, email: "new email", password: "secret", password_confirmation: "secret"} 
     end
@@ -44,5 +63,38 @@ class UsersControllerTest < ActionController::TestCase
   test "should update user" do
     patch :update, id: @user, user: { name: @user.name, email: @user.email }
     assert_redirected_to user_path(@user)
+  end
+
+  test "guest should not do anything" do
+    session[:user_id] = nil
+    expected = User.count
+    get :index
+    assert_redirected_to new_session_path
+    get :show, id: @user
+    assert_redirected_to new_session_path
+    delete :destroy, id: @user
+    assert_equal expected, User.count
+    assert_redirected_to new_session_path
+    get :edit, id: @user
+    assert_redirected_to new_session_path
+    patch :update, id: @user, user: { name: @user.name, email: @user.email }
+    assert_equal expected, User.count
+    assert_redirected_to new_session_path
+  end
+  test "member should not do anything on others" do
+    user = users(:one)
+    expected = User.count
+    get :index
+    assert_redirected_to root_url
+    get :show, id: user
+    assert_redirected_to root_url
+    delete :destroy, id: user
+    assert_equal expected, User.count
+    assert_redirected_to root_url
+    get :edit, id: user
+    assert_redirected_to root_url
+    patch :update, id: user, user: { name: user.name, email: user.email }
+    assert_equal expected, User.count
+    assert_redirected_to root_url
   end
 end
