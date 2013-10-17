@@ -24,10 +24,7 @@
     <% @ruby_application.ruby_gems.each do |rg| %>
       <li><%= rg.name %> <%= rg.version %> <%= rg.license %></li>
         <table>
-          <% @ruby_application.security_alerts.where("ruby_gem_id == '?'", rg.id).each do |sa| %>
-            <% next if sa.version_fix && sa.version_fix != "" && Gem::Version.new(sa.version_fix) < Gem::Version.new(rg.version) %>
-            <% next if SecurityAlert::STATUS_CODES[sa.status] == "Ignored" %>
-            <% next if SecurityAlert::STATUS_CODES[sa.status] == "Refused" %>
+          <% @ruby_application.filtered_security_alerts.each do |sa| %>
             <tr>
               <td><%= link_to sa.short_desc, security_alert_path(sa) %></td>
               <td>Status: <%= sa.status_text %></td>

@@ -8,15 +8,20 @@ class RubyApplication < ActiveRecord::Base
   has_many :security_alerts
 
   def result
-    num_alerts = 0
+    filtered_security_alerts.length == 0
+  end
+
+  def filtered_security_alerts
+    return @security_alerts if @security_alerts
+    @sa = []
     ruby_gems.each do |rg|
-          security_alerts.where("ruby_gem_id == '?'", rg.id).each do |sa|
-            next if sa.version_fix && sa.version_fix != "" && Gem::Version.new(sa.version_fix) < Gem::Version.new(rg.version)
-            next if SecurityAlert::STATUS_CODES[sa.status] == "Ignored"
-            next if SecurityAlert::STATUS_CODES[sa.status] == "Refused"
-            num_alerts = num_alerts + 1
-          end
+      security_alerts.where("ruby_gem_id == '?'", rg.id).each do |sa|
+        next if sa.version_fix && sa.version_fix != "" && Gem::Version.new(sa.version_fix) < Gem::Version.new(rg.version)
+        next if SecurityAlert::STATUS_CODES[sa.status] == "Ignored"
+        next if SecurityAlert::STATUS_CODES[sa.status] == "Refused"
+        @sa << sa
+      end
     end
-    num_alerts == 0
+    @sa
   end
 end
