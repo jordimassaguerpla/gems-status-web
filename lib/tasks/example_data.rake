@@ -13,11 +13,13 @@ namespace :db do
       u.name = "Forrest Gump"
       u.email = "fg@nodomain.no"
       u.password = "secret"
+      u.password_confirmation = "secret"
       u.save
       u = User.new
       u.name = "Dan Taylor"
       u.email = "dt@nodomain.no"
       u.password = "secret"
+      u.password_confirmation = "secret"
       u.save
 
       # ruby applications

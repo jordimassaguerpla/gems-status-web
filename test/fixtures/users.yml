@@ -4,6 +4,7 @@ one:
   name: one
   email: email_one
   admin: 1
+  api_access_token: AA
 
 two:
   name: two

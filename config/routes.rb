@@ -7,7 +7,9 @@ GemsStatusWeb::Application.routes.draw do
 
   resources :users
 
-  resources :ruby_applications
+  resources :ruby_applications do
+    get 'result'
+  end
 
   root 'sessions#new'
 

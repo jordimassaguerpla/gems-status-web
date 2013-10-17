@@ -14,8 +14,8 @@ class SessionsController < ApplicationController
   end
   
   def create
-    user = User.find_by_email(params[:email])
-    if user && user.authenticate(params[:password])
+    user = user_by_params
+    if user
       session[:user_id] = user.id
       if is_admin?
         redirect_to users_path
@@ -34,4 +34,6 @@ class SessionsController < ApplicationController
     session[:user_id] = nil if session[:user_id]
     redirect_to root_url
   end
+
+
 end

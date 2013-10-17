@@ -71,4 +71,21 @@ class RubyApplicationsControllerTest < ActionController::TestCase
     get :edit, id: @ruby_application
     assert_redirected_to root_url
   end
+
+  test "can't get result without api token" do
+    session[:user_id] = nil
+    get :result, ruby_application_id: @ruby_application.id
+    assert_redirected_to new_session_path
+  end
+
+  test "can get result with api token" do
+    session[:user_id] = nil
+    get :result, ruby_application_id: @ruby_application.id, api_access_token: users(:one).api_access_token 
+    assert_response :success
+  end
+  test "can't get result with api token if not owner" do
+    session[:user_id] = nil
+    get :result, ruby_application_id: @ruby_application.id, api_access_token: users(:three).api_access_token 
+    assert_redirected_to new_session_path
+  end
 end

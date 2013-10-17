@@ -1,5 +1,6 @@
 class RubyApplicationsController < ApplicationController
   before_action :set_ruby_application, only: [:show, :edit, :update]
+  skip_before_action :verify_autenticity_token, only: :result
 
   # GET /ruby_applications/1
   # GET /ruby_applications/1.json
@@ -56,6 +57,15 @@ class RubyApplicationsController < ApplicationController
         format.html { render action: 'new' }
         format.json { render json: @ruby_application.errors, status: :unprocessable_entity }
       end
+    end
+  end
+
+  # GET /ruby_applications/1/result
+  def result
+    @ruby_application = RubyApplication.find(params[:ruby_application_id])
+    respond_to do |format|
+      format.html { render action: 'result' }
+      format.json { render json: @ruby_application.result }
     end
   end
   private
