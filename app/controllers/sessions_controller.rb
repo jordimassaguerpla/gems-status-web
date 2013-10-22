@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
       elsif is_from_security_team?
         redirect_to reports_path
       else
-        redirect_to user_path(current_user)
+        redirect_to home_path
       end
     end
   end
@@ -22,7 +22,7 @@ class SessionsController < ApplicationController
       elsif is_from_security_team?
         redirect_to reports_path
       else
-        redirect_to user_path(current_user)
+        redirect_to home_path
       end
     else
       flash.now.alert = "Email or password is invalid"

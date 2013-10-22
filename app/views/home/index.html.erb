@@ -1,0 +1,19 @@
+<% if current_user %>
+  <p>Hi <%= current_user.name %>, welcome to <span class="alert"><%= request.host %></a></p>
+  <% if !@security_alerts %>
+    There are no security alerts.
+  <% else %>
+    <p>
+    Here you have a list of possible security alerts for your ruby applications:
+    </p>
+    <% @security_alerts.each do |sa| %>
+      <br>
+      <span class="alert">
+        <%= link_to sa.ruby_application.name, ruby_application_path(sa.ruby_application) %>/<%= link_to "#{sa.ruby_gem.name}/#{sa.short_desc}", security_alert_path(sa) %>
+      </span>
+    <% end %>
+  <% end %>
+  <div id="actions">
+  <%= link_to 'New ruby application', new_ruby_application_path %>
+  </div>
+<% end %>

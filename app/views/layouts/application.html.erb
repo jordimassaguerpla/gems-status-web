@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>GemsStatusWeb</title>
+  <title><%= request.host %></title>
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= csrf_meta_tags %>
@@ -9,21 +9,19 @@
 <body>
 <p id="notice"><%= notice %></p>
 <p class="error"><%= flash[:error] %></p>
-<% if current_user %>
-  Logged in as 
-  <%= current_user.name %> |
-  <%= link_to "logout", session_path("current"), method: "delete" %>
-<% end %>
+<div id="top-left">
+  <% if current_user %>
+    <%= link_to current_user.name, user_path(current_user) %>@<span class="alert"><%= link_to request.host, root_url %></span><%= link_to "~", home_path %>/<%= @path %>:>
+  <% end %>
+</div>
+<div id="top-right">
+  <% if current_user %>
+    <%= link_to "logout", session_path("current"), method: "delete" %>
+  <% end %>
+</div>
 
-<% if is_from_security_team? %>
-  <br/>
-  security team member
-<% end %>
-<% if is_admin? %>
-  <br/>
-  This user is admin
-<% end %>
 <%= yield %>
+<!-- 
 <br>
 <p>
 --------------------<br/>
@@ -38,5 +36,6 @@ Analysis done by <a href="http://www.github.com/jordimassaguerpla/gems-status/">
   Run <%= LastRun.count %> times since <%= LastRun.first.created_at %>
 <% end %>
 </p>
+ -->
 </body>
 </html>

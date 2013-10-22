@@ -1,13 +1,13 @@
 body {
   background-color: #fff;
   color: #333;
-  font-family: verdana, arial, helvetica, sans-serif;
+  font-family: monospace;
   font-size: 13px;
   line-height: 18px;
 }
 
 p, ol, ul, td {
-  font-family: verdana, arial, helvetica, sans-serif;
+  font-family: monospace;
   font-size: 13px;
   line-height: 18px;
 }
@@ -21,7 +21,7 @@ pre {
 a {
   color: #000;
   &:visited {
-    color: #666;
+    color: #000;
   }
   &:hover {
     color: #fff;
@@ -66,4 +66,26 @@ div {
     font-size: 12px;
     list-style: square;
   }
+}
+h1 {
+  font-size: 13px;
+}
+#top-right{
+  float: right;
+}
+#actions{
+  margin-top: 20px;
+}
+.alert{
+  a {
+    color: #f00;
+    &:visited {
+      color: #f00;
+    }
+    &:hover {
+      color: #fff;
+      background-color: #f00;
+    }
+  }
+  color: #f00;
 }

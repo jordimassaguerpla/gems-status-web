@@ -1,4 +1,5 @@
 GemsStatusWeb::Application.routes.draw do
+  get 'home', to: 'home#index'
   resources :reports
   resources :sessions
   resources :source_repos

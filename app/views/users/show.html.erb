@@ -14,14 +14,10 @@
   <ul>
   <% @user.ruby_applications.each do |ra| %>
     <li>
-      <%= link_to ra.name, ruby_application_path(ra) %> |
-      <%= link_to "Edit", edit_ruby_application_path(ra) %> |
-      <%= link_to "Destroy", ra, method: :delete, data: { confirm: "Are you sure?" } %>
+      <%= link_to ra.name, ruby_application_path(ra) %>
     </li>
   <% end %>
   </ul>
-  <br>
-  <%= link_to 'New ruby application', new_ruby_application_path %>
   <br>
   <strong>API access token: </strong>
   <%= @user.api_access_token %>

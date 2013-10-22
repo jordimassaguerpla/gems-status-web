@@ -1,15 +1,7 @@
 <p>
-<% if is_admin? %>
-  <%= link_to "Users", users_path %> > 
-<% end %>
-<%= link_to @security_alert.ruby_application.user.name, user_path(@security_alert.ruby_application.user) %> >
-<%= link_to @security_alert.ruby_application.name, ruby_application_path(@security_alert.ruby_application) %> >
-<%= @security_alert.short_desc %>
-<p>
   <strong>Desc:</strong>
   <%= @security_alert.desc %>
 </p>
 <p>
 <%= render 'form' %>
-</p>
 </p>

@@ -4,10 +4,12 @@ class SecurityAlertsController < ApplicationController
   # GET /security_alerts/1
   # GET /security_alerts/1.json
   def show
+    @path = "#{@security_alert.ruby_application.name}/#{@security_alert.ruby_gem.name}/#{@security_alert.short_desc}"
   end
 
   # GET /security_alerts/1/edit
   def edit
+    @path = "#{@security_alert.ruby_application.name}/#{@security_alert.short_desc}"
     @security_alert = SecurityAlert.find(params[:id])
   end
 

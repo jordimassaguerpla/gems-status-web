@@ -5,10 +5,12 @@ class RubyApplicationsController < ApplicationController
   # GET /ruby_applications/1
   # GET /ruby_applications/1.json
   def show
+    @path = RubyApplication.find(params[:id]).name
   end
 
   # GET /ruby_applications/1/edit
   def edit
+    @path = RubyApplication.find(params[:id]).name
     @ruby_application = RubyApplication.find(params[:id])
     @user = @ruby_application.user
   end
@@ -33,7 +35,7 @@ class RubyApplicationsController < ApplicationController
     @ruby_application = RubyApplication.find(params[:id])
     @ruby_application.destroy
     respond_to do |format|
-      format.html { redirect_to @ruby_application.user }
+      format.html { redirect_to home_path }
       format.json { head :no_content }
     end
   end

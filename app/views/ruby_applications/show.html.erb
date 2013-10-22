@@ -1,37 +1,21 @@
-<% if is_admin? %>
-  <%= link_to "Users", users_path %> >
-<% end %>
-<%= link_to @ruby_application.user.name, user_path(@ruby_application.user) %> >
-<%= @ruby_application.name %>
-
 <p>
   <strong>Name:</strong>
   <%= @ruby_application.name %>
-</p>
-
-<p>
+  <br/>
   <strong>Filename:</strong>
   <%= @ruby_application.filename %>
-</p>
-
-<p>
+  <br/>
   <strong>Gems url:</strong>
   <%= @ruby_application.gems_url %>
-</p>
-<p>
+  <br/>
   <strong>gems:</strong>
   <ul>
     <% @ruby_application.ruby_gems.each do |rg| %>
       <li><%= rg.name %> <%= rg.version %> <%= rg.license %></li>
-        <table>
-          <% @ruby_application.filtered_security_alerts.each do |sa| %>
-            <tr>
-              <td><%= link_to sa.short_desc, security_alert_path(sa) %></td>
-              <td>Status: <%= sa.status_text %></td>
-              <td>Fixed in: <%= sa.version_fix %></td>
-            </tr>
-          <% end %>
-        </table>
     <% end %>
   </ul>
 </p>
+  <div id="actions">
+    <%= link_to "Edit", edit_ruby_application_path(@ruby_application) %> |
+    <%= link_to "Destroy", @ruby_application, method: :delete, data: { confirm: "Are you sure?" } %>
+  </div>

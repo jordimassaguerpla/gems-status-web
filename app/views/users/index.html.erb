@@ -11,9 +11,10 @@
     <% end %>
   </tbody>
 </table>
-<br>
-<%= link_to 'New User', new_user_path %>
-<br/>
-<%= link_to 'Source repos', source_repos_path %>
-<br />
-<%= link_to 'Reports', reports_path %>
+<div id="actions">
+  <%= link_to 'New User', new_user_path %>
+  |
+  <%= link_to 'Source repos', source_repos_path %>
+  |
+  <%= link_to 'Reports', reports_path %>
+</div>
