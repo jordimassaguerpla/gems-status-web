@@ -11,10 +11,10 @@ class SessionsControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test "should get new and redirect to current_user" do
+  test "should get new and redirect to home" do
     session[:user_id] = users(:two).id
     get :new
-    assert_redirected_to user_path(users(:two))
+    assert_redirected_to home_path
   end
 
   test "should get new and redirect to reports if security team role" do
@@ -36,11 +36,11 @@ class SessionsControllerTest < ActionController::TestCase
     assert_redirected_to users_path
   end
 
-  test "should create session and redirect to user if not admin" do
+  test "should create session and redirect to home if not admin" do
     user = users(:two)
     post :create, email: user.email, password: "secret" 
     assert_equal session[:user_id], user.id
-    assert_redirected_to user_path(user)
+    assert_redirected_to home_path
   end
 
   test "should create session and redirect to reports if security team role" do

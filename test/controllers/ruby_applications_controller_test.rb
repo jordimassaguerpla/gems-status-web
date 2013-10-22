@@ -32,7 +32,7 @@ class RubyApplicationsControllerTest < ActionController::TestCase
     assert_difference('RubyApplication.count', -1) do
       delete :destroy, id: @ruby_application
     end
-    assert_redirected_to user_path @ruby_application.user
+    assert_redirected_to home_path
   end
 
   test "should update ruby application" do

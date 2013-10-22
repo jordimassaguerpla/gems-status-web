@@ -48,19 +48,39 @@ class UsersControllerTest < ActionController::TestCase
     assert_redirected_to user_path(assigns(:user))
   end
 
-  test "should get edit" do
+  test "should'nt get edit if not admin" do
+    get :edit, id: @user
+    assert_redirected_to root_url
+  end
+
+  test "should get edit if admin" do
+    session[:user_id] = users(:one)
     get :edit, id: @user
     assert_response :success
   end
 
-  test "should destroy user" do
+  test "shouldn't destroy user if not admin" do
+    assert_difference('User.count', 0) do
+      delete :destroy, id: @user
+    end
+    assert_redirected_to root_url
+  end
+
+  test "should destroy user if admin" do
+    session[:user_id] = users(:one)
     assert_difference('User.count', -1) do
       delete :destroy, id: @user
     end
     assert_redirected_to users_path
   end
 
-  test "should update user" do
+  test "shouldn't update user if not admin" do
+    patch :update, id: @user, user: { name: @user.name, email: @user.email }
+    assert_redirected_to root_url
+  end
+
+  test "should update user if admin" do
+    session[:user_id] = users(:one)
     patch :update, id: @user, user: { name: @user.name, email: @user.email }
     assert_redirected_to user_path(@user)
   end
