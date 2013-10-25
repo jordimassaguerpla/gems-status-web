@@ -19,7 +19,11 @@ test:
   timeout: 5000
 
 production:
-  adapter: sqlite3
-  database: db/production.sqlite3
-  pool: 5
-  timeout: 5000
+  adapter:   postgresql
+  host:      127.0.0.1
+  port:      5432
+  enconding: unicode
+  username:  tux
+  password:  linux
+  database:  gsw
+
