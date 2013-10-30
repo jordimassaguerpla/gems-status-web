@@ -1,5 +1,3 @@
-require "bundler/capistrano"
-
 set :application, 'gems-status-web'
 set :repo_url, 'git@github.com:jordimassaguerpla/gems-status-web.git'
 
@@ -14,6 +12,7 @@ set :deploy_to, '/srv/www/vhosts/gems-status-web'
 
 # set :linked_files, %w{config/database.yml}
 # set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
+set :linked_dirs, %w{tmp log vendor/bundle}
 
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
 # set :keep_releases, 5
@@ -36,7 +35,6 @@ namespace :deploy do
       # end
     end
   end
-
 
   after :finishing, 'deploy:cleanup'
 
