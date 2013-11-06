@@ -9,9 +9,10 @@
 # default admin user
 u = User.new
 u.name = "Admin"
-u.email = "admin@localhost.com"
+u.email = "admin@localhost"
 u.password= "secret"
 u.password_confirmation = "secret"
+u.admin = 1
 u.save
 
 
