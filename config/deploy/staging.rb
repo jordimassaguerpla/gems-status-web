@@ -16,7 +16,7 @@ role :db,  %w{deploy@redruby.io}
 # definition into the server list. The second argument
 # something that quacks like a has can be used to set
 # extended properties on the server.
-server 'redruby.io', user: 'deploy', roles: %w{web app}
+server 'redruby.io', user: 'deploy', roles: %w{web app db}
 #, my_property: :my_value
 
 # you can set custom ssh options

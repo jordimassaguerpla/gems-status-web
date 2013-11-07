@@ -36,10 +36,12 @@ namespace :deploy do
     end
   end
 
-  after :finishing, 'deploy:cleanup'
+  after :finishing, 'deploy:cleanup', :roles => [:web, :app]
   desc 'Load seed data into the database'
   task :seed do
-    run "cd #{current_path};#{bundle} exec rake db:seed RAILS_ENV=#{rails_env}"
+    on roles(:db) do
+      execute "cd #{current_path};bundle exec rake db:seed"
+    end
   end
 
 end
