@@ -15,6 +15,7 @@ namespace :gems_status do
           end
           break
         end
+      end
     end
   end
 end
