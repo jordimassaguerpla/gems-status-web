@@ -7,7 +7,7 @@ namespace :gems_status do
     data.each do |key, version|
       SecurityAlert.all.each do |sa|
         if sa.desc.include? key
-          if version = "0.0.0"
+          if version == "0.0.0"
             sa.status = 2
           else
             sa.status = 1
