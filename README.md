@@ -8,3 +8,5 @@ gems-status-web
 ===============
 
 web interface for the [gems-status](http://github.com/jordimassaguerpla/gems-status)
+
+see README.rdoc for installation instructions

@@ -3,28 +3,18 @@
 This README documents whatever steps are necessary to get the
 application up and running.
 
+Download the gems-status-web-os from SUSE Studio Gallery http://susestudio.com/a/61bKK8/gems-status-web-os and:
 
-* Ruby version
-  1.9.3
+  - copy your ssh public key to the .ssh directory of the deploy user
+  - change root password or whatever your security policies say about root access (have another user , disable ssh, ...)
+  - edit /srv/www/vhosts/gems-status-web/shared/config/application.yml to set up your mail credentials
 
-* System dependencies
-  None
+On your workstation:
 
-* Configuration
-  Nothing specific
+  - set hostname in config/deploy/staging.rb and config/deploy/production.rb
+  - run "cap staging deploy" (or "cap production deploy")
+  - run "cap staging deploy:seed" (or "cap production deploy")
 
-* Database creation
-  run "rake db"
-
-* Database initialization
-  run "rake db:migrate"
-
-* How to run the test suite
-  run "rake"
-
-* Services (job queues, cache servers, search engines, etc.)
-  Run "rake gems_status:run" on a crontab in order to make gems-status insert data in the database
-
-* Deployment instructions
-  rename config/application.yml.example to config/application.yml and update the EMAIL_USERNAME and EMAIL_PASSWORD
+Access the web interface as admin@localhost/secret and change the admin password.
+Add users (throuhg the web interface)
 
