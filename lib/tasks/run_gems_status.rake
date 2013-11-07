@@ -49,7 +49,7 @@ namespace :gems_status do
           rg = RubyGem.find_by(:name => gem.name, :version => gem.version.to_s)
           next if SecurityAlert.exists?(:desc => alert.description, :ruby_gem_id => rg.id, :ruby_application_id => ra.id)
           sa = SecurityAlert.new
-          sa.desc = alert.description
+          sa.desc = alert.description.truncate(250)
           sa.ruby_gem = rg
           sa.ruby_application = ra
           sa.version_fix = ""
