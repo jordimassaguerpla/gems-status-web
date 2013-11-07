@@ -1,0 +1,9 @@
+namespace :deploy do
+  desc 'Load seed data into the database'
+  task :seed do
+    on roles(:db) do
+      execute "cd #{current_path};bundle exec rake db:seed"
+    end
+  end
+end
+

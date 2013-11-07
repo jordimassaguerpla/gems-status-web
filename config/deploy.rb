@@ -37,11 +37,5 @@ namespace :deploy do
   end
 
   after :finishing, 'deploy:cleanup', :roles => [:web, :app]
-  desc 'Load seed data into the database'
-  task :seed do
-    on roles(:db) do
-      execute "cd #{current_path};bundle exec rake db:seed"
-    end
-  end
 
 end
