@@ -47,6 +47,10 @@ namespace :gems_status do
           gem = alert.gem
           puts "DEBUG: Adding alert for #{gem.name}"
           rg = RubyGem.find_by(:name => gem.name, :version => gem.version.to_s)
+          if rg.nil?
+            puts "ERROR: I could not find #{gem.name} : #{gem.version.to_s}"
+            exit -1
+          end
           next if SecurityAlert.exists?(:desc => alert.description, :ruby_gem_id => rg.id, :ruby_application_id => ra.id)
           sa = SecurityAlert.new
           sa.desc = alert.description.truncate(250)
