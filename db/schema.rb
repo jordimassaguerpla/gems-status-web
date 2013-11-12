@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131017114700) do
+ActiveRecord::Schema.define(version: 20131112142417) do
 
   create_table "last_runs", force: true do |t|
     t.datetime "created_at"
@@ -51,6 +51,7 @@ ActiveRecord::Schema.define(version: 20131017114700) do
     t.datetime "updated_at"
     t.integer  "status"
     t.string   "comment"
+    t.string   "sec_key"
   end
 
   create_table "source_repos", force: true do |t|
@@ -66,7 +67,7 @@ ActiveRecord::Schema.define(version: 20131017114700) do
     t.datetime "updated_at"
     t.string   "email"
     t.string   "password_digest"
-    t.integer  "admin",           default: 0
+    t.integer  "admin",            default: 0
     t.integer  "role"
     t.string   "api_access_token"
   end

@@ -11,11 +11,16 @@ namespace :gems_status do
       runner.source = GemsStatus::LockfileGems.new(conf)
       source_repos = {}
       SourceRepo.all.to_a.each { |a| source_repos[a.name] = a.url }
+      fixed = {}
+      SecurityAlert.all.each do |sa|
+        next if sa.sec_key.nil? || sa.sec_key.blank? || sa.version_fix.nil? || 
+          sa.version_fix.blank? || sa.version_fix == "0.0.0"
+        fixed[sa.sec_key] = sa.version_fix
+
+      end
       conf = {
         "classname" => "NotASecurityAlertChecker",
-        # TODO: insert into fixed from the database?
-        #       or disable the email??
-        "fixed" => {},
+        "fixed" => fixed,
         "source_repos" => source_repos,
         "email_username" => CONFIG["GMAIL_USERNAME"],
         "email_password" => CONFIG["GMAIL_PASSWORD"],
@@ -46,23 +51,26 @@ namespace :gems_status do
       puts "DEBUG: Inserting alerts"
       runner.checker_results.each do |_, alerts|
         alerts.each do |alert|
-          desc= alert.description.gsub("'","-").gsub('"',"-")
-          gem = alert.gem
-          puts "DEBUG: Adding alert for #{gem.name}"
-          rg = RubyGem.find_by(:name => gem.name, :version => gem.version.to_s)
-          if rg.nil?
-            puts "ERROR: I could not find #{gem.name} : #{gem.version.to_s}"
-            exit -1
+          alert.security_messages.each do |sec_key, message|
+            desc= message.desc.gsub("'","-").gsub('"',"-")
+            gem = alert.gem
+            puts "DEBUG: Adding alert for #{gem.name}"
+            rg = RubyGem.find_by(:name => gem.name, :version => gem.version.to_s)
+            if rg.nil?
+              puts "ERROR: I could not find #{gem.name} : #{gem.version.to_s}"
+              exit -1
+            end
+            next if SecurityAlert.exists?(:sec_key => sec_key, :ruby_gem_id => rg.id, :ruby_application_id => ra.id)
+            sa = SecurityAlert.new
+            sa.desc = desc
+            sa.ruby_gem = rg
+            sa.ruby_application = ra
+            sa.version_fix = ""
+            sa.status = 0
+            sa.comment = ""
+            sa.sec_key = sec_key
+            sa.save
           end
-          next if SecurityAlert.exists?(:desc => desc, :ruby_gem_id => rg.id, :ruby_application_id => ra.id)
-          sa = SecurityAlert.new
-          sa.desc = desc
-          sa.ruby_gem = rg
-          sa.ruby_application = ra
-          sa.version_fix = ""
-          sa.status = 0
-          sa.comment = ""
-          sa.save
         end
       end
     end
