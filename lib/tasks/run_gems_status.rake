@@ -13,10 +13,12 @@ namespace :gems_status do
       SourceRepo.all.to_a.each { |a| source_repos[a.name] = a.url }
       fixed = {}
       SecurityAlert.all.each do |sa|
-        next if sa.sec_key.nil? || sa.sec_key.blank? || sa.version_fix.nil? || 
-          sa.version_fix.blank? || sa.version_fix == "0.0.0"
-        fixed[sa.sec_key] = sa.version_fix
-
+        next if sa.sec_key.nil? || sa.sec_key.blank?
+        if sa.status == 2 || sa.status == 3
+          fixed[sa.sec_key] = "0.0.0"
+        elsif sa.status == 1 && !sa.version_fix.nil? && !sa.version_fix.blank?
+          fixed[sa.sec_key] = sa.version_fix
+        end
       end
       conf = {
         "classname" => "NotASecurityAlertChecker",
