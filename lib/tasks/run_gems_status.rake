@@ -46,6 +46,7 @@ namespace :gems_status do
       puts "DEBUG: Inserting alerts"
       runner.checker_results.each do |_, alerts|
         alerts.each do |alert|
+          desc= alert.description.gsub("'","-").gsub('"',"-")
           gem = alert.gem
           puts "DEBUG: Adding alert for #{gem.name}"
           rg = RubyGem.find_by(:name => gem.name, :version => gem.version.to_s)
@@ -53,9 +54,9 @@ namespace :gems_status do
             puts "ERROR: I could not find #{gem.name} : #{gem.version.to_s}"
             exit -1
           end
-          next if SecurityAlert.exists?(:desc => alert.description, :ruby_gem_id => rg.id, :ruby_application_id => ra.id)
+          next if SecurityAlert.exists?(:desc => desc, :ruby_gem_id => rg.id, :ruby_application_id => ra.id)
           sa = SecurityAlert.new
-          sa.desc = alert.description
+          sa.desc = desc
           sa.ruby_gem = rg
           sa.ruby_application = ra
           sa.version_fix = ""
