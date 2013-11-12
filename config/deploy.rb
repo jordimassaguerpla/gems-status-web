@@ -12,7 +12,7 @@ set :deploy_to, '/srv/www/vhosts/gems-status-web'
 
 set :linked_files, %w{config/database.yml config/application.yml config/newrelic.yml}
 # set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
-set :linked_dirs, %w{tmp log vendor/bundle build_security_messages_check}
+set :linked_dirs, %w{tmp log vendor/bundle build_security_messages_check db}
 
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
 # set :keep_releases, 5
