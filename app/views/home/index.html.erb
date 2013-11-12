@@ -7,9 +7,9 @@
     Here you have a list of possible security alerts for your ruby applications:
     </p>
     <% @security_alerts.each do |sa| %>
+      <% next if Gem::Version.new(sa.ruby_gem.version) >= Gem::Version.new(sa.version_fix) %>
       <br>
       <span class="alert">
-        <% next if Gem::Version.new(sa.ruby_gem.version) >= Gem::Version.new(sa.version_fix) %>
         <%= link_to sa.ruby_application.name, ruby_application_path(sa.ruby_application) %>/<%= link_to "#{sa.ruby_gem.name}/#{sa.short_desc}", security_alert_path(sa) %>
       </span>
     <% end %>
