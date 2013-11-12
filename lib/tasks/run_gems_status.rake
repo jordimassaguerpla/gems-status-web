@@ -48,9 +48,6 @@ namespace :gems_status do
         alerts.each do |alert|
           gem = alert.gem
           puts "DEBUG: Adding alert for #{gem.name}"
-          if gem.name == "rails"
-            require "debugger";debugger
-          end
           rg = RubyGem.find_by(:name => gem.name, :version => gem.version.to_s)
           if rg.nil?
             puts "ERROR: I could not find #{gem.name} : #{gem.version.to_s}"
