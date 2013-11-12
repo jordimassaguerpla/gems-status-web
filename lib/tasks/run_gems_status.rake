@@ -13,6 +13,8 @@ namespace :gems_status do
       SourceRepo.all.to_a.each { |a| source_repos[a.name] = a.url }
       conf = {
         "classname" => "NotASecurityAlertChecker",
+        # TODO: insert into fixed from the database?
+        #       or disable the email??
         "fixed" => {},
         "source_repos" => source_repos,
         "email_username" => CONFIG["GMAIL_USERNAME"],
@@ -46,14 +48,17 @@ namespace :gems_status do
         alerts.each do |alert|
           gem = alert.gem
           puts "DEBUG: Adding alert for #{gem.name}"
+          if gem.name == "rails"
+            require "debugger";debugger
+          end
           rg = RubyGem.find_by(:name => gem.name, :version => gem.version.to_s)
           if rg.nil?
             puts "ERROR: I could not find #{gem.name} : #{gem.version.to_s}"
             exit -1
           end
-          next if SecurityAlert.exists?(:desc => alert.description.truncate(250), :ruby_gem_id => rg.id, :ruby_application_id => ra.id)
+          next if SecurityAlert.exists?(:desc => alert.description, :ruby_gem_id => rg.id, :ruby_application_id => ra.id)
           sa = SecurityAlert.new
-          sa.desc = alert.description.truncate(250)
+          sa.desc = alert.description
           sa.ruby_gem = rg
           sa.ruby_application = ra
           sa.version_fix = ""
