@@ -1,6 +1,6 @@
 class SecurityAlert < ActiveRecord::Base
   validates :desc, presence: true
-  validates :version_fix, format: { with: /\A\d+.\d+.\d+\z/, message: "x.y.z format" }, allow_nil: true, allow_blank: true
+  validates :version_fix, format: { with:  /\A\d+[.\d+.]*\z/, message: "x.y.z format" }
   validates :status, presence: true
   validates :status, format: { with: /\A[0-3]\Z/ }
   belongs_to :ruby_gem
