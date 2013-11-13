@@ -26,9 +26,7 @@ namespace :gems_status do
         "source_repos" => source_repos,
         "email_username" => CONFIG["GMAIL_USERNAME"],
         "email_password" => CONFIG["GMAIL_PASSWORD"],
-        "mailing_lists" => [
-          'rubyonrails-security@googlegroups.com'
-        ],
+        "mailing_lists" => CONFIG["mailing_lists"],
         "email_to" => [ra.user.email]
 
       }
