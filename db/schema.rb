@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131112142417) do
+ActiveRecord::Schema.define(version: 20131113154140) do
 
   create_table "last_runs", force: true do |t|
     t.datetime "created_at"
@@ -45,7 +45,7 @@ ActiveRecord::Schema.define(version: 20131112142417) do
   create_table "security_alerts", force: true do |t|
     t.integer  "ruby_gem_id"
     t.integer  "ruby_application_id"
-    t.string   "desc"
+    t.text     "desc",                limit: 255
     t.string   "version_fix"
     t.datetime "created_at"
     t.datetime "updated_at"
