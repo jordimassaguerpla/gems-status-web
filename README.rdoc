@@ -14,6 +14,7 @@ On your workstation:
   - set hostname in config/deploy/staging.rb and config/deploy/production.rb
   - run "cap staging deploy" (or "cap production deploy")
   - run "cap staging deploy:seed" (or "cap production deploy")
+  - run "cap staging delayed_job:start" (or "cap production delayed_job:start")
 
 Access the web interface as admin@localhost/secret and change the admin password.
 Add users (throuhg the web interface)
