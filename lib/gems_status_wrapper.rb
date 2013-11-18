@@ -1,13 +1,23 @@
 class GemsStatusWrapper
-  def run
-    RubyApplication.all.each do |ra|
-      conf = {
-        "classname" => "LockfileGems",
-        "filename" => ra.filename,
-        "gems_url" => ra.gems_url
-      }
-      runner = GemsStatus::Runner.new
-      runner.source = GemsStatus::LockfileGems.new(conf)
+
+  def run(ruby_application)
+    conf = {
+      "classname" => "LockfileGems",
+      "filename" => ruby_application.filename,
+      "gems_url" => ruby_application.gems_url
+    }
+    runner = GemsStatus::Runner.new
+    runner.source = GemsStatus::LockfileGems.new(conf)
+    runner.add_checker(not_a_security_alert_checker(ruby_application))
+    runner.execute
+    insert_into_database(runner, ruby_application)
+    lr = LastRun.new
+    lr.save
+  end
+
+  private
+
+  def not_a_security_alert_checker(ruby_application)
       source_repos = {}
       SourceRepo.all.to_a.each { |a| source_repos[a.name] = a.url }
       fixed = {}
@@ -26,54 +36,62 @@ class GemsStatusWrapper
         "email_username" => CONFIG["GMAIL_USERNAME"],
         "email_password" => CONFIG["GMAIL_PASSWORD"],
         "mailing_lists" => CONFIG["mailing_lists"],
-        "email_to" => [ra.user.email]
+        "email_to" => [ruby_application.user.email]
 
       }
-      runner.add_checker(GemsStatus::NotASecurityAlertChecker.new(conf))
-      runner.execute
-      puts "DEBUG: ------- Inserting into database -----------------"
-      puts "DEBUG: Inserting gems"
-      runner.gem_list.each do |name, gem|
-        puts "DEBUG: #{name}"
-        if !RubyGem.exists?(:name => gem.name, :version => gem.version.to_s)
-          rg = RubyGem.new
-          rg.name = gem.name
-          rg.version = gem.version.to_s
-          rg.license = gem.license
-          rg.ruby_applications = [ra]
-          rg.save
-        else
-          rg = RubyGem.find_by(:name => gem.name, :version => gem.version.to_s)
-          rg.ruby_applications << ra unless rg.ruby_applications.include? ra
-        end
+      GemsStatus::NotASecurityAlertChecker.new(conf)
+  end
+
+  def insert_into_database(runner, ruby_application)
+    puts "DEBUG: ------- Inserting into database -----------------"
+    insert_gems(runner, ruby_application)
+    insert_alerts(runner, ruby_application)
+  end
+
+  def insert_gems(runner, ruby_application)
+    puts "DEBUG: Inserting gems"
+    runner.gem_list.each do |name, gem|
+      puts "DEBUG: #{name}"
+      if !RubyGem.exists?(:name => gem.name, :version => gem.version.to_s)
+        rg = RubyGem.new
+        rg.name = gem.name
+        rg.version = gem.version.to_s
+        rg.license = gem.license
+        rg.ruby_applications = [ruby_application]
+        rg.save
+      else
+        rg = RubyGem.find_by(:name => gem.name, :version => gem.version.to_s)
+        rg.ruby_applications << ruby_application unless rg.ruby_applications.include? ruby_application
       end
-      puts "DEBUG: Inserting alerts"
-      runner.checker_results.each do |_, alerts|
-        alerts.each do |alert|
-          alert.security_messages.each do |sec_key, message|
-            desc= message.desc.gsub("'","-").gsub('"',"-")
-            gem = alert.gem
-            puts "DEBUG: Adding alert for #{gem.name}"
-            rg = RubyGem.find_by(:name => gem.name, :version => gem.version.to_s)
-            if rg.nil?
-              puts "ERROR: I could not find #{gem.name} : #{gem.version.to_s}"
-              exit -1
-            end
-            next if SecurityAlert.exists?(:sec_key => sec_key, :ruby_gem_id => rg.id, :ruby_application_id => ra.id)
-            sa = SecurityAlert.new
-            sa.desc = desc
-            sa.ruby_gem = rg
-            sa.ruby_application = ra
-            sa.version_fix = ""
-            sa.status = 0
-            sa.comment = ""
-            sa.sec_key = sec_key
-            sa.save
+    end
+  end
+
+  def insert_alerts(runner, ruby_application)
+    puts "DEBUG: Inserting alerts"
+    runner.checker_results.each do |_, alerts|
+      alerts.each do |alert|
+        alert.security_messages.each do |sec_key, message|
+          desc= message.desc.gsub("'","-").gsub('"',"-")
+          gem = alert.gem
+          puts "DEBUG: Adding alert for #{gem.name}"
+          rg = RubyGem.find_by(:name => gem.name, :version => gem.version.to_s)
+          if rg.nil?
+            puts "ERROR: I could not find #{gem.name} : #{gem.version.to_s}"
+            exit -1
           end
+          next if SecurityAlert.exists?(:sec_key => sec_key, :ruby_gem_id => rg.id, :ruby_application_id => ruby_application.id)
+          sa = SecurityAlert.new
+          sa.desc = desc
+          sa.ruby_gem = rg
+          sa.ruby_application = ruby_application
+          sa.version_fix = ""
+          sa.status = 0
+          sa.comment = ""
+          sa.sec_key = sec_key
+          sa.save
         end
       end
     end
-    lr = LastRun.new
-    lr.save
   end
+
 end
