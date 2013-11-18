@@ -34,21 +34,21 @@ namespace :delayed_job do
   desc "Stop the delayed_job process"
   task :stop do
     on roles(:app) do
-      execute "cd #{current_path};#{rails_env} #{delayed_job_command} stop"
+      execute "cd #{current_path};#{rails_env} ruby1.9 #{delayed_job_command} stop"
     end
   end
 
   desc "Start the delayed_job process"
   task :start do
     on roles(:app) do
-      execute "cd #{current_path};#{rails_env} #{delayed_job_command} start #{args}"
+      execute "cd #{current_path};#{rails_env} ruby1.9 #{delayed_job_command} start #{args}"
     end
   end
 
   desc "Restart the delayed_job process"
   task :restart do
     on roles(:app) do
-      execute "cd #{current_path};#{rails_env} #{delayed_job_command} restart #{args}"
+      execute "cd #{current_path};#{rails_env} ruby1.9 #{delayed_job_command} restart #{args}"
     end
   end
 end
