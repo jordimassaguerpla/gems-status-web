@@ -1,3 +1,5 @@
+require "gems_status_wrapper"
+
 class RubyApplication < ActiveRecord::Base
   validates :name, presence: true
   validates :filename, presence: true
@@ -23,5 +25,8 @@ class RubyApplication < ActiveRecord::Base
       end
     end
     @sa
+  end
+  def run_report
+    GemsStatusWrapper.new.run(self)
   end
 end

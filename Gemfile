@@ -50,3 +50,8 @@ gem 'coveralls', :require => false, :group => :test
 gem 'gems-status'
 gem 'debugger', :group => :development
 gem 'newrelic_rpm'
+
+# Use delayed jobs for asynchronously execute longer tasks in the background.
+gem 'delayed_job_active_record'
+gem "daemons"
+

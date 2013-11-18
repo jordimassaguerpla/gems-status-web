@@ -20,6 +20,7 @@ class RubyApplicationsController < ApplicationController
   def update
     respond_to do |format|
       if @ruby_application.update(ruby_application_params)
+        @ruby_application.delay.run_report
         format.html { redirect_to @ruby_application.user, notice: 'Ruby application was successfully updated.' }
         format.json { head :no_content }
       else
@@ -53,6 +54,7 @@ class RubyApplicationsController < ApplicationController
 
     respond_to do |format|
       if @ruby_application.save
+        @ruby_application.delay.run_report
         format.html { redirect_to @ruby_application.user, notice: 'Ruby application was successfully created.' }
         format.json { render action: 'show', status: :created, location: @ruby_application }
       else

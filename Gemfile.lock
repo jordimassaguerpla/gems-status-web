@@ -51,12 +51,18 @@ GEM
       simplecov (>= 0.7)
       term-ansicolor
       thor
+    daemons (1.1.9)
     debugger (1.6.2)
       columnize (>= 0.3.1)
       debugger-linecache (~> 1.2.0)
       debugger-ruby_core_source (~> 1.2.3)
     debugger-linecache (1.2.0)
     debugger-ruby_core_source (1.2.3)
+    delayed_job (4.0.0)
+      activesupport (>= 3.0, < 4.1)
+    delayed_job_active_record (4.0.0)
+      activerecord (>= 3.0, < 4.1)
+      delayed_job (>= 3.0, < 4.1)
     erubis (2.7.0)
     execjs (2.0.2)
     gems-status (1.70.0)
@@ -173,7 +179,9 @@ DEPENDENCIES
   capistrano-rails
   coffee-rails (~> 4.0.0)
   coveralls
+  daemons
   debugger
+  delayed_job_active_record
   gems-status
   jbuilder (~> 1.2)
   jquery-rails
