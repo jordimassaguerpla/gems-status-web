@@ -40,7 +40,7 @@ gem 'bcrypt-ruby'
 
 # Use Capistrano for deployment
 gem 'capistrano', group: :development
-gem 'capistrano-bundler'
+gem 'capistrano-bundler', group: :development
 gem 'capistrano-rails', group: :development
 
 # Use debugger
