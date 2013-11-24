@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20131118170024) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "delayed_jobs", force: true do |t|
     t.integer  "priority",   default: 0, null: false
     t.integer  "attempts",   default: 0, null: false
@@ -27,10 +30,7 @@ ActiveRecord::Schema.define(version: 20131118170024) do
     t.datetime "updated_at"
   end
 
-  add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority"
-
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+  add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
 
   create_table "last_runs", force: true do |t|
     t.datetime "created_at"
@@ -64,7 +64,7 @@ ActiveRecord::Schema.define(version: 20131118170024) do
   create_table "security_alerts", force: true do |t|
     t.integer  "ruby_gem_id"
     t.integer  "ruby_application_id"
-    t.text     "desc",                limit: 255
+    t.text     "desc"
     t.string   "version_fix"
     t.datetime "created_at"
     t.datetime "updated_at"
