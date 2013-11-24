@@ -1,5 +1,6 @@
 GemsStatusWeb::Application.routes.draw do
   get 'home', to: 'home#index'
+  get 'ping', to: 'home#ping'
   resources :reports
   resources :sessions
   resources :source_repos

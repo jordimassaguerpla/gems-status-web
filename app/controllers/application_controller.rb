@@ -15,7 +15,9 @@ class ApplicationController < ActionController::Base
   end
 
   def authenticate
-    redirect_to new_session_path unless current_user
+    redirect_to new_session_path unless current_user ||
+           params[:controller] == "home" &&
+           params[:action] == "ping"
   end
 
   def is_admin?
@@ -23,6 +25,7 @@ class ApplicationController < ActionController::Base
   end
 
   def authorize
+    return false if params[:controller] == "home" && params[:action] == "ping"
     return false if params[:controller] == "home" && params[:action] == "index"
     return false if is_admin?
     return false if is_from_security_team? && params[:controller] == "reports" && params[:action] == "index"
