@@ -22,7 +22,7 @@ test:
   enconding: unicode
   username:  tux
   password:  linux
-  database:  gsw
+  database:  gsw-test
 
 production:
   adapter:   postgresql
