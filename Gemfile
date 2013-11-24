@@ -62,3 +62,7 @@ gem 'rails_12factor', group: :production
 # Webserver recommended for heroku
 gem 'unicorn'
 
+# Foreman manage Procfile-based applications
+# Heroku requires Procfile
+# thus foreman "simulates" having heroku on development
+gem 'foreman', :group => :development
