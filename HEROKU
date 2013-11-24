@@ -1,5 +1,6 @@
 
 the first time)
+ git config push.default upstream
  git branch --set-upstream heroku heroku/master
  git push -u heroku heroku:master
 
