@@ -29,6 +29,9 @@ ActiveRecord::Schema.define(version: 20131118170024) do
 
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority"
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "last_runs", force: true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
