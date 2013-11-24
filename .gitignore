@@ -20,3 +20,4 @@ config/application.yml
 config/database.yml
 build_security_messages_check/
 
+.env
