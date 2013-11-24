@@ -7,4 +7,8 @@ class HomeController < ApplicationController
     end
     @security_alerts.flatten!
   end
+
+  def ping
+  end
+
 end
