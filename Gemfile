@@ -59,3 +59,6 @@ gem "daemons"
 # Heroku integration
 gem 'rails_12factor', group: :production
 
+# Webserver recommended for heroku
+gem 'unicorn'
+
