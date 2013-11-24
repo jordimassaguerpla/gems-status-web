@@ -56,3 +56,6 @@ gem 'newrelic_rpm'
 gem 'delayed_job_active_record'
 gem "daemons"
 
+# Heroku integration
+gem 'rails_12factor', group: :production
+
