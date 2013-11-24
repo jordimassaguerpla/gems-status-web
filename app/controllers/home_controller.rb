@@ -22,4 +22,8 @@ class HomeController < ApplicationController
       format.json { render json: @similars }
     end
   end
+
+  def ping
+  end
+
 end

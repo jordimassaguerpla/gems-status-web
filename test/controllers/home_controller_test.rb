@@ -11,4 +11,8 @@ class HomeControllerTest < ActionController::TestCase
     get :sa_similars
     assert_redirected_to new_session_path
   end
+  test "ping" do
+    get 'ping'
+    assert_response :success
+  end
 end
