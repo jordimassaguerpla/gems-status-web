@@ -66,3 +66,7 @@ gem 'unicorn'
 # Heroku requires Procfile
 # thus foreman "simulates" having heroku on development
 gem 'foreman', :group => :development
+
+# Integration with github
+gem 'omniauth-github'
+

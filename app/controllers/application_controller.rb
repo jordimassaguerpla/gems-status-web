@@ -45,8 +45,9 @@ class ApplicationController < ActionController::Base
 
   def user_by_params
     return User.find_by_api_access_token(params[:api_access_token]) if params[:api_access_token]
-    user = User.find_by_email(params[:email])
-    user if user && user.authenticate(params[:password])
+    auth = request.env["omniauth.auth"]
+    return nil if auth.nil?
+    user = User.find_by_provider_and_uid(auth["provider"], auth["uid"]) || User.create_with_omniauth(auth)
   end
 
   private
