@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131201124815) do
+ActiveRecord::Schema.define(version: 20131201132129) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,7 +47,7 @@ ActiveRecord::Schema.define(version: 20131201124815) do
   create_table "ruby_applications", force: true do |t|
     t.string   "name"
     t.string   "filename"
-    t.string   "gems_url"
+    t.string   "gems_url",   default: "https://rubygems.org/gems"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
