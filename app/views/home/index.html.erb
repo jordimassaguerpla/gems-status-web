@@ -1,4 +1,7 @@
-<% if current_user %>
+<% if current_user && !beta_user? %>
+  Sorry. This is limited to beta_users.
+
+<% elsif current_user %>
   <p>Hi <%= current_user.name %>, welcome to <span class="alert"><%= request.host %></a></p>
   <% if !@security_alerts %>
     There are no security alerts.

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131125000109) do
+ActiveRecord::Schema.define(version: 20131201124815) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -90,6 +90,7 @@ ActiveRecord::Schema.define(version: 20131125000109) do
     t.string   "api_access_token"
     t.string   "provider"
     t.string   "uid"
+    t.integer  "beta_user",        default: 0
   end
 
 end
