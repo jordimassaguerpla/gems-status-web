@@ -3,8 +3,11 @@ class SessionsController < ApplicationController
   skip_before_filter :authorize
   def new
     if current_user
-      redirect_to reports_path if is_from_security_team?
-      redirect_to home_path
+      if is_from_security_team?
+        redirect_to reports_path 
+      else
+        redirect_to home_path
+      end
     end
   end
   
@@ -12,8 +15,11 @@ class SessionsController < ApplicationController
     user = user_by_params
     if user
       session[:user_id] = user.id
-      redirect_to reports_path if is_from_security_team?
-      redirect_to home_path
+      if is_from_security_team?
+        redirect_to reports_path 
+      else
+        redirect_to home_path
+      end
     else
       flash.now.alert = "Email or password is invalid"
       render "new"
