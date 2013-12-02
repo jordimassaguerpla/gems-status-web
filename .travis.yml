@@ -1,5 +1,5 @@
 language: ruby
-bundler_args: --without debugger
+bundler_args: --without develoment
 rvm:
   - "1.9.3"
 
