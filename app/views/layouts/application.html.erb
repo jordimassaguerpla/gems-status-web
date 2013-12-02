@@ -11,11 +11,14 @@
 <p class="error"><%= flash[:error] %></p>
 <div id="top-left">
   <% if current_user %>
-    <%= link_to current_user.name, user_path(current_user) %>@<span class="alert"><%= link_to request.host, root_url %></span><%= link_to "~", home_path %>/<%= @path %>:>
+    <%= link_to current_user.name, user_path(current_user) %>@<span class="alert"><%= link_to request.host, home_path %></span>/<%= @path %>:>
   <% end %>
 </div>
 <div id="top-right">
   <% if current_user %>
+    <% if is_admin? %>
+      <%= link_to "admin", users_path %>
+    <% end %>
     <%= link_to "logout", session_path("current"), method: "delete" %>
   <% end %>
 </div>
