@@ -6,18 +6,37 @@
     <p>
     Here you have a list of possible security alerts for your ruby applications:
     </p>
-    <% @security_alerts.each do |sa| %>
-      <% next if !sa.version_fix.nil? && !sa.version_fix.blank? && Gem::Version.new(sa.ruby_gem.version) >= Gem::Version.new(sa.version_fix) %>
-      <br>
-      <span class="alert">
-        <%= link_to sa.ruby_application.name, ruby_application_path(sa.ruby_application) %>/<%= link_to "#{sa.ruby_gem.name}/#{sa.short_desc}", security_alert_path(sa) %>
-        Status: <%= sa.status_text %>
-        <% if !sa.version_fix.nil? && !sa.version_fix.blank? %>
-          Fixed in:
-          <%= sa.version_fix %> 
-        <% end %>
-      </span>
-    <% end %>
+    <table>
+      <tr>
+        <th>Ruby application</th>
+        <th>Gem</th>
+        <th>Short description</th>
+        <th>Status</th>
+        <th>Fixed in</th>
+      </tr>
+      <% @security_alerts.each do |sa| %>
+        <% next if !sa.version_fix.nil? && !sa.version_fix.blank? && Gem::Version.new(sa.ruby_gem.version) >= Gem::Version.new(sa.version_fix) %>
+        <tr>
+          <td>
+            <%= link_to sa.ruby_application.name, ruby_application_path(sa.ruby_application) %>
+          </td>
+          <td>
+            <%= sa.ruby_gem.name %>
+          </td>
+          <td>
+            <%= link_to "#{sa.short_desc}", security_alert_path(sa) %>
+          </td>
+          <td>
+            <%= sa.status_text %>
+          </td>
+          <td>
+            <% if !sa.version_fix.nil? && !sa.version_fix.blank? %>
+              <%= sa.version_fix %> 
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
   <% end %>
   <div id="actions">
   <%= link_to 'New ruby application', new_ruby_application_path %>
