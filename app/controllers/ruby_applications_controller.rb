@@ -69,7 +69,11 @@ class RubyApplicationsController < ApplicationController
     @ruby_application = RubyApplication.find(params[:ruby_application_id])
     respond_to do |format|
       format.html { render action: 'result' }
-      format.json { render json: @ruby_application.result }
+      if @ruby_application.result
+        format.json { render json: @ruby_application.result}
+      else
+        format.json { render json: @ruby_application.gems_with_security_alerts}
+      end
     end
   end
   private

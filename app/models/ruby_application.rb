@@ -13,6 +13,14 @@ class RubyApplication < ActiveRecord::Base
     filtered_security_alerts.length == 0
   end
 
+  def gems_with_security_alerts
+    gems = []
+    filtered_security_alerts.each do |sa|
+      gems << sa.ruby_gem.name
+    end
+    gems.uniq!
+  end
+
   def filtered_security_alerts
     return @security_alerts if @security_alerts
     @sa = []
