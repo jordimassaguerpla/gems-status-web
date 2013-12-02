@@ -26,14 +26,14 @@ class SessionsControllerTest < ActionController::TestCase
   test "should get new and redirect to users if admin" do
     session[:user_id] = users(:one).id
     get :new
-    assert_redirected_to users_path
+    assert_redirected_to home_path
   end
 
-  test "should create session and redirect to users if admin" do
+  test "should create session and redirect to home if admin" do
     user = users(:one)
     post :create, email: user.email, password: "secret" 
     assert_equal session[:user_id], user.id
-    assert_redirected_to users_path
+    assert_redirected_to home_path
   end
 
   test "should create session and redirect to home if not admin" do
