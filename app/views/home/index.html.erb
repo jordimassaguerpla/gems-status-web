@@ -6,16 +6,15 @@
     <p>
     Here you have a list of possible security alerts for your ruby applications:
     </p>
-    <table>
+    <table width="100%">
       <tr>
         <th>Ruby application</th>
         <th>Gem</th>
-        <th>Short description</th>
+        <th>Security alert</th>
         <th>Status</th>
         <th>Fixed in</th>
       </tr>
       <% @security_alerts.each do |sa| %>
-        <% next if !sa.version_fix.nil? && !sa.version_fix.blank? && Gem::Version.new(sa.ruby_gem.version) >= Gem::Version.new(sa.version_fix) %>
         <tr>
           <td>
             <%= link_to sa.ruby_application.name, ruby_application_path(sa.ruby_application) %>
