@@ -25,7 +25,7 @@
  What others have said:
 </p>
 <p>
-<% @security_alert.ruby_gem.security_alerts.where("desc = '#{@security_alert.desc}' and id != '#{@security_alert.id}'").each do |sa| %>
+<% SecurityAlert.where("desc = '#{@security_alert.desc}' and id != '#{@security_alert.id}'").each do |sa| %>
   <%= sa.status_text %>
   <%= sa.comment %><br/>
   Fixed in:
