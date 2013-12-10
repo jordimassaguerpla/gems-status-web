@@ -29,11 +29,11 @@ Since you get the same alerts as the other users, you can see what other users h
 
 This is the list of the security alerts for a user:
 
-!(gsw1.png)
+![security alerts list](gsw1.png)
 
 This is when a user wants to review a security alert. Note the "What others have said" section.
 
-!(gsw2.png)
+![security alert](gsw2.png)
 
 
 # Jenkins integration
