@@ -35,6 +35,10 @@ This is when a user wants to review a security alert. Note the "What others have
 
 ![security alert](gsw2.png)
 
+This is the user profile. Note the api token.
+
+![user profile](gsw3.png)
+
 
 # Jenkins integration
 
