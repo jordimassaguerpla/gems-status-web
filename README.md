@@ -44,7 +44,7 @@ This is the user profile. Note the api token.
 
 gems-status-web can be intregrated in jenkins by using curl and an api token. This is an example:
 
-curl https://gem-status.cloud.suse.de/ruby_applications/4/result.json?api_access_token=xxxxxx | grep true
+curl https://gem-status/ruby_applications/4/result.json?api_access_token=xxxxxx | grep true
 
 The API token is in the user profile.
 
