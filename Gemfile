@@ -69,4 +69,5 @@ gem 'foreman', :group => :development
 
 # Integration with github
 gem 'omniauth-github'
+gem 'octokit'
 

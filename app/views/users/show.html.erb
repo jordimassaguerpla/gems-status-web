@@ -14,6 +14,16 @@
   <% end %>
   </ul>
   <br>
+  <strong>Repos in github</strong>
+  <% @user.repos.each do |r| %>
+    <ul>
+      <li>
+       <%= r.name %>
+      </li>
+    </ul>
+  <% end %>
+  <br>
+  <%= link_to "Import repos", user_path(@user) + "/import_repos" %>
   <strong>API access token: </strong>
   <%= @user.api_access_token %>
   <br>

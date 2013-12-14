@@ -13,6 +13,13 @@ class UsersController < ApplicationController
     @path = User.find(params[:id]).name
   end
 
+  # GET /users/1/import_repos
+  def import_repos
+    @user = User.find(params[:user_id])
+    @user.delay.import_repos
+    redirect_to @user, notice: "Import repos action triggered"
+  end
+
   # GET /users/1/edit
   def edit
     @user = User.find(params[:id])

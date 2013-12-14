@@ -7,7 +7,9 @@ GemsStatusWeb::Application.routes.draw do
 
   resources :security_alerts
 
-  resources :users
+  resources :users do
+    get 'import_repos'
+  end
 
   resources :ruby_applications do
     get 'result'

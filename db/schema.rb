@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131201132129) do
+ActiveRecord::Schema.define(version: 20131214121511) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,6 +35,13 @@ ActiveRecord::Schema.define(version: 20131201132129) do
   create_table "last_runs", force: true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "repos", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "user_id"
   end
 
   create_table "ruby_application_ruby_gem_relationships", force: true do |t|
@@ -91,6 +98,7 @@ ActiveRecord::Schema.define(version: 20131201132129) do
     t.string   "provider"
     t.string   "uid"
     t.integer  "beta_user",        default: 0
+    t.string   "auth_token"
   end
 
 end

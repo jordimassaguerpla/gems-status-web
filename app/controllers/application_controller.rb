@@ -44,6 +44,7 @@ class ApplicationController < ActionController::Base
     return false if current_user && params[:controller] == "ruby_applications" && params[:action] == "result" && params[:ruby_application_id] && current_user.ruby_applications.include?(RubyApplication.find(params[:ruby_application_id]))
     return false if current_user && params[:controller] == "security_alerts" && params[:id] && current_user.ruby_applications.include?(SecurityAlert.find(params[:id]).ruby_application)
     return false if current_user && params[:controller] == "users" && params[:id] && params[:id] == current_user.id.to_s && params[:action] == "show"
+    return false if current_user && params[:controller] == "users" && params[:user_id] && params[:user_id] == current_user.id.to_s && params[:action] == "import_repos"
     flash[:error] = "Unauthorized access"
     redirect_to root_url
   end
@@ -57,6 +58,9 @@ class ApplicationController < ActionController::Base
     auth = request.env["omniauth.auth"]
     return nil if auth.nil?
     user = User.find_by_provider_and_uid(auth["provider"], auth["uid"]) || User.create_with_omniauth(auth)
+    user.auth_token = auth['credentials']['token'] if auth['credentials'] && auth['credentials']['token']
+    user.save
+    user
   end
 
   private
