@@ -13,6 +13,7 @@
       <tr>
         <th>Ruby application</th>
         <th>Gem</th>
+        <th>Version</th>
         <th>Security alert</th>
         <th>Status</th>
         <th>Fixed in</th>
@@ -24,6 +25,9 @@
           </td>
           <td>
             <%= sa.ruby_gem.name %>
+          </td>
+          <td>
+            <%= sa.ruby_gem.version %>
           </td>
           <td>
             <%= link_to "#{sa.short_desc}", security_alert_path(sa) %>

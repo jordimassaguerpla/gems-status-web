@@ -25,11 +25,14 @@
  What others have said:
 </p>
 <p>
-<% @security_alert.ruby_gem.security_alerts.where("desc = '#{@security_alert.desc}' and id != '#{@security_alert.id}'").each do |sa| %>
+<% SecurityAlert.where("desc = '#{@security_alert.desc}' and id != '#{@security_alert.id}'").each do |sa| %>
+  <% next if sa.status == 0 %>
   <%= sa.status_text %>
-  <%= sa.comment %><br/>
-  Fixed in:
-  <%= sa.version_fix %>
+  <%= sa.comment %> 
+  <% if sa.version_fix && sa.status == 1 %>
+    Fixed in:
+    <%= sa.version_fix %>
+  <% end %>
   <br/>
   ---------------<br/>
 <% end %>
