@@ -45,6 +45,7 @@ class RubyApplicationsController < ApplicationController
 
   # GET /ruby_application/new
   def new
+    @user = current_user
     @ruby_application = RubyApplication.new
     @repo_names = current_user.repo_names
   end
