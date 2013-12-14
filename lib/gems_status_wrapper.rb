@@ -33,9 +33,9 @@ class GemsStatusWrapper
         "classname" => "NotASecurityAlertChecker",
         "fixed" => fixed,
         "source_repos" => source_repos,
-        "email_username" => CONFIG["GMAIL_USERNAME"],
-        "email_password" => CONFIG["GMAIL_PASSWORD"],
-        "mailing_lists" => CONFIG["mailing_lists"],
+        "email_username" => ENV["GMAIL_USERNAME"],
+        "email_password" => ENV["GMAIL_PASSWORD"],
+        "mailing_lists" => ENV["mailing_lists"].split,
         "email_to" => [ruby_application.user.email]
 
       }
