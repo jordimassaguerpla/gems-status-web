@@ -1,9 +1,19 @@
 class GemsStatusWrapper
 
   def run(ruby_application)
+    begin
+      local_path = "/tmp/gemfiles/#{ruby_application.name}"
+      local_filename = local_path + "/" + "Gemfile.lock"
+      FileUtils.mkdir_p local_path 
+      gemfile = open(ruby_application.filename) {|f| f.read }
+      File.open(local_filename, "w") {|f| f.write(gemfile)}
+    rescue
+      puts "ERROR: Problems getting #{ruby_application.name} and saving it to #{local_filename}"
+      return
+    end
     conf = {
       "classname" => "LockfileGems",
-      "filename" => ruby_application.filename,
+      "filename" => local_filename,
       "gems_url" => ruby_application.gems_url
     }
     runner = GemsStatus::Runner.new
