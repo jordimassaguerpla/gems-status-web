@@ -15,13 +15,13 @@
   </ul>
   <br>
   <strong>Repos in github</strong>
+  <ul>
   <% @user.repos.each do |r| %>
-    <ul>
       <li>
        <%= r.name %>
       </li>
-    </ul>
   <% end %>
+  </ul>
   <br>
   <%= link_to "Import repos", user_path(@user) + "/import_repos" %>
   <br>

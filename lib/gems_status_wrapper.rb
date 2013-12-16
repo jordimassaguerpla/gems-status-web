@@ -18,7 +18,8 @@ class GemsStatusWrapper
     }
     runner = GemsStatus::Runner.new
     runner.source = GemsStatus::LockfileGems.new(conf)
-    runner.add_checker(not_a_security_alert_checker(ruby_application))
+    checker = not_a_security_alert_checker(ruby_application)
+    runner.add_checker(checker) if checker
     runner.execute
     insert_into_database(runner, ruby_application)
     lr = LastRun.new
@@ -28,6 +29,9 @@ class GemsStatusWrapper
   private
 
   def not_a_security_alert_checker(ruby_application)
+      return nil if !ENV["GMAIL_USERNAME"]
+      return nil if !ENV["GMAIL_PASSWORD"]
+      return nil if !ENV["MAILING_LISTS"]
       source_repos = {}
       SourceRepo.all.to_a.each { |a| source_repos[a.name] = a.url }
       fixed = {}
@@ -45,7 +49,7 @@ class GemsStatusWrapper
         "source_repos" => source_repos,
         "email_username" => ENV["GMAIL_USERNAME"],
         "email_password" => ENV["GMAIL_PASSWORD"],
-        "mailing_lists" => ENV["mailing_lists"].split,
+        "mailing_lists" => ENV["MAILING_LISTS"].split,
         "email_to" => [ruby_application.user.email]
 
       }

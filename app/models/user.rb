@@ -1,3 +1,5 @@
+require "open-uri"
+
 class User < ActiveRecord::Base
   before_create :generate_access_token
   has_many :ruby_applications
@@ -10,6 +12,7 @@ class User < ActiveRecord::Base
     repos.each do |repo|
       result << repo.name
     end
+    result
   end
 
   def import_repos
@@ -25,19 +28,19 @@ class User < ActiveRecord::Base
       repos.each do |repo|
         if !Repo.find_by_name(repo.name)
           begin
-            filename = "https://raw.github.com/#{user.name}/#{repo.name}/master/Gemfile.lock"
+            filename = "https://raw.github.com/#{name}/#{repo.name}/master/Gemfile.lock"
             Rails.logger.debug "trying to download #{filename}"
             open(filename)
             Rails.logger.debug "saving repo to database"
             r = Repo.new
             r.name = repo.name
+            r.user = self
             r.save
-            repos << r
           rescue
+            Rails.logger.debug "#{filename} does not exist. Ignoring repo ..."
           end
         end
       end
-      save
     end
   end
   private
