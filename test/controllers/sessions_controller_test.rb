@@ -1,9 +1,4 @@
 require 'test_helper'
-class User
-  def authenticate(password)
-    true
-  end
-end
 
 class SessionsControllerTest < ActionController::TestCase
   test "should get new" do
