@@ -21,7 +21,7 @@ test:
   port:      5432
   enconding: unicode
   username:  postgres
-  database:  gsw-test
+  database:  gsw_test
 
 production:
   adapter:   postgresql
