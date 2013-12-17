@@ -5,12 +5,15 @@ one:
   email: email_one
   admin: 1
   api_access_token: AA
+  beta_user: 1
 
 two:
   name: two
   email: email_two
+  beta_user: 1
 
 three:
   name: three
   email: email_three
   role: 1
+  beta_user: 1
