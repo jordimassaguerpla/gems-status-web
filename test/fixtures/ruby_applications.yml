@@ -11,3 +11,15 @@ two:
   filename: MyString
   gems_url: MyString
   user: :two
+
+three:
+  name: MyString
+  filename: MyString
+  gems_url: MyString
+  user: :two
+
+four:
+  name: MyString
+  filename: MyString
+  gems_url: MyString
+  user: :two

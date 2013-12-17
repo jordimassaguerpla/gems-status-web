@@ -2,6 +2,7 @@ require 'test_helper'
 
 class RubyApplicationsControllerTest < ActionController::TestCase
   setup do
+    CONFIG["MAX_RUBY_APP_BY_USER"] = -1
     @ruby_application = ruby_applications(:two)
     session[:user_id] = users(:two)
   end
@@ -21,6 +22,17 @@ class RubyApplicationsControllerTest < ActionController::TestCase
       post :create, ruby_application: { name: @ruby_application.name, filename: @ruby_application.filename, gems_url: @ruby_application.gems_url }
     end
     assert_redirected_to user_path(users(:two))
+  end
+
+  test "should not create more ruby applications than max" do
+    CONFIG["MAX_RUBY_APP_BY_USER"] = RubyApplication.find_all_by_user_id(users(:two)).count
+    errors_b4 = flash[:error]?flash[:error].length():0
+    b4 = RubyApplication.count
+    post :create, ruby_application: { name: @ruby_application.name, filename: @ruby_application.filename, gems_url: @ruby_application.gems_url }
+    assert_equal b4, RubyApplication.count
+    assert_redirected_to home_path
+    assert flash[:error]
+    assert flash[:error].length > errors_b4
   end
 
   test "should get edit" do

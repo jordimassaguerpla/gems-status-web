@@ -45,6 +45,7 @@ class RubyApplicationsController < ApplicationController
 
   # GET /ruby_application/new
   def new
+    return if !check_max
     @user = current_user
     @ruby_application = RubyApplication.new
     @repo_names = current_user.repo_names
@@ -53,6 +54,7 @@ class RubyApplicationsController < ApplicationController
   # POST /ruby_application
   # POST /ruby_application.json
   def create
+    return if !check_max
     @ruby_application = RubyApplication.new(ruby_application_params)
     @ruby_application.user = current_user
     @ruby_application.filename = "https://raw.github.com/#{current_user.name}/#{@ruby_application.name}/master/Gemfile.lock"
@@ -90,5 +92,20 @@ class RubyApplicationsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def ruby_application_params
       params.require(:ruby_application).permit(:name)
+    end
+
+    def check_max
+      return true unless CONFIG["MAX_RUBY_APP_BY_USER"]
+      return true if CONFIG["MAX_RUBY_APP_BY_USER"] < 0
+      count = RubyApplication.find_all_by_user_id(current_user.id).length
+      if count >= CONFIG["MAX_RUBY_APP_BY_USER"]
+        flash[:error] = "You can create a maximum of #{CONFIG["MAX_RUBY_APP_BY_USER"]} applications"
+        respond_to do |format|
+          format.html { redirect_to home_path }
+          format.json { render json: flash[:error] }
+        end
+        return false
+      end
+      return true
     end
 end

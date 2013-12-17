@@ -13,6 +13,13 @@ else
   CONFIG = {}
 end
 
+CONFIG["GMAIL_USERNAME"] if ENV["GMAIL_USERNAME"]
+CONFIG["GMAIL_PASSWORD"] if ENV["GMAIL_PASSWORD"]
+CONFIG["MAILING_LISTS"] if ENV["MAILING_LISTS"]
+CONFIG["MAX_RUBY_APP_BY_USER"] if ENV["MAX_RUBY_APP_BY_USER"]
+
+
+
 module GemsStatusWeb
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
