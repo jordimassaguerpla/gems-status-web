@@ -20,8 +20,7 @@ test:
   host:      127.0.0.1
   port:      5432
   enconding: unicode
-  username:  tux
-  password:  linux
+  username:  postgres
   database:  gsw-test
 
 production:

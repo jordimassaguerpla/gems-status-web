@@ -2,4 +2,6 @@ language: ruby
 bundler_args: --without development
 rvm:
   - "1.9.3"
+before_script:
+  - psql -c 'create database gsw-test;' -U postgres
 
