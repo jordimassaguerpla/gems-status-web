@@ -117,4 +117,20 @@ class UsersControllerTest < ActionController::TestCase
     assert_equal expected, User.count
     assert_redirected_to root_url
   end
+  test "a non-beta user should not do anything" do
+    session[:user_id] = users(:four)
+    expected = User.count
+    get :index
+    assert_redirected_to root_url
+    get :show, id: @user
+    assert_redirected_to root_url
+    delete :destroy, id: @user
+    assert_equal expected, User.count
+    assert_redirected_to root_url
+    get :edit, id: @user
+    assert_redirected_to root_url
+    patch :update, id: @user, user: { name: @user.name, email: @user.email }
+    assert_equal expected, User.count
+    assert_redirected_to root_url
+  end
 end

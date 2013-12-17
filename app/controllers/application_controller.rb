@@ -33,19 +33,19 @@ class ApplicationController < ActionController::Base
     return false if params[:controller] == "home" && params[:action] == "ping"
     return false if params[:controller] == "home" && params[:action] == "index"
     return false if is_admin?
-    if !beta_user?
+    if beta_user?
+      return false if is_from_security_team? && params[:controller] == "reports" && params[:action] == "index"
+      return false if is_from_security_team? && params[:controller] == "security_alerts" && params[:action] == "show"
+      return false if current_user && params[:controller] == "ruby_applications" && ["new", "create"].include?(params[:action])
+      return false if current_user && params[:controller] == "ruby_applications" && params[:id] && current_user.ruby_applications.include?(RubyApplication.find(params[:id]))
+      return false if current_user && params[:controller] == "ruby_applications" && params[:action] == "result" && params[:ruby_application_id] && current_user.ruby_applications.include?(RubyApplication.find(params[:ruby_application_id]))
+      return false if current_user && params[:controller] == "security_alerts" && params[:id] && current_user.ruby_applications.include?(SecurityAlert.find(params[:id]).ruby_application)
+      return false if current_user && params[:controller] == "users" && params[:id] && params[:id] == current_user.id.to_s && params[:action] == "show"
+      return false if current_user && params[:controller] == "users" && params[:user_id] && params[:user_id] == current_user.id.to_s && params[:action] == "import_repos"
+      flash[:error] = "Unauthorized access"
+    else
       flash[:error] = "Sorry this is limited to beta users"
-      redirect_to root_url
     end
-    return false if is_from_security_team? && params[:controller] == "reports" && params[:action] == "index"
-    return false if is_from_security_team? && params[:controller] == "security_alerts" && params[:action] == "show"
-    return false if current_user && params[:controller] == "ruby_applications" && ["new", "create"].include?(params[:action])
-    return false if current_user && params[:controller] == "ruby_applications" && params[:id] && current_user.ruby_applications.include?(RubyApplication.find(params[:id]))
-    return false if current_user && params[:controller] == "ruby_applications" && params[:action] == "result" && params[:ruby_application_id] && current_user.ruby_applications.include?(RubyApplication.find(params[:ruby_application_id]))
-    return false if current_user && params[:controller] == "security_alerts" && params[:id] && current_user.ruby_applications.include?(SecurityAlert.find(params[:id]).ruby_application)
-    return false if current_user && params[:controller] == "users" && params[:id] && params[:id] == current_user.id.to_s && params[:action] == "show"
-    return false if current_user && params[:controller] == "users" && params[:user_id] && params[:user_id] == current_user.id.to_s && params[:action] == "import_repos"
-    flash[:error] = "Unauthorized access"
     redirect_to root_url
   end
 

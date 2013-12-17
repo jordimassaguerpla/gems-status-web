@@ -17,3 +17,8 @@ three:
   email: email_three
   role: 1
   beta_user: 1
+
+four:
+  name: four
+  email: email_four
+  beta_user: 0
