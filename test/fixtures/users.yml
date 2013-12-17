@@ -10,15 +10,24 @@ one:
 two:
   name: two
   email: email_two
+  api_access_token: BB
   beta_user: 1
 
 three:
   name: three
   email: email_three
   role: 1
+  api_access_token: CC
   beta_user: 1
 
 four:
   name: four
   email: email_four
   beta_user: 0
+
+five:
+  name: five
+  email: email_four
+  beta_user: 0
+  api_access_token: DD
+
