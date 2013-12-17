@@ -8,11 +8,7 @@ class User < ActiveRecord::Base
   validates :email, presence: true, uniqueness: true
 
   def repo_names
-    result = []
-    repos.each do |repo|
-      result << repo.name
-    end
-    result
+    repos.collect(&:name)
   end
 
   def import_repos
