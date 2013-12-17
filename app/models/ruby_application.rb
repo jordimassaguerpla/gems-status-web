@@ -18,14 +18,14 @@ class RubyApplication < ActiveRecord::Base
     filtered_security_alerts.each do |sa|
       gems << sa.ruby_gem.name
     end
-    gems.uniq!
+    gems.uniq
   end
 
   def filtered_security_alerts
     return @security_alerts if @security_alerts
     @sa = []
     ruby_gems.each do |rg|
-      security_alerts.where("'ruby_gem_id' = '?'", rg.id).each do |sa|
+      SecurityAlert.find_all_by_ruby_gem_id(rg.id).each do |sa|
         next if sa.version_fix && sa.version_fix != "" && Gem::Version.new(sa.version_fix) <= Gem::Version.new(rg.version)
         next if SecurityAlert::STATUS_CODES[sa.status] == "Ignored"
         next if SecurityAlert::STATUS_CODES[sa.status] == "Refused"
