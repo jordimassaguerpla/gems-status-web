@@ -1,25 +1,25 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  name: MyString
+  name: one
   filename: MyString
   gems_url: MyString
   user: :one
 
 two:
-  name: MyString
+  name: two
   filename: MyString
   gems_url: MyString
   user: :two
 
 three:
-  name: MyString
+  name: three
   filename: MyString
   gems_url: MyString
   user: :two
 
 four:
-  name: MyString
+  name: four
   filename: MyString
   gems_url: MyString
   user: :two

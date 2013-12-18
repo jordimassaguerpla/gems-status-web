@@ -1,11 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  name: MyString
-  version: MyString
-  license: MyString
+  name: one
+  version: 1.2.3
+  license: MIT
 
 two:
-  name: MyString
-  version: MyString
-  license: MyString
+  name: two
+  version: 1.2.3
+  license: Ruby
