@@ -34,7 +34,7 @@ class User < ActiveRecord::Base
         Rails.logger.error "there was some kind of problem getting repos from github"
         return
       end
-      repos = repo.data
+      repos = repos.data
       if repos.nil?
         Rails.logger.error "there was some kind of problem getting repos from github"
         return
