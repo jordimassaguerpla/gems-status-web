@@ -12,34 +12,61 @@ class User < ActiveRecord::Base
   end
 
   def import_repos
-    # TODO: error handling
-    if auth_token
-      Rails.logger.debug "initializing octokit"
+    return unless auth_token
+    Rails.logger.debug "initializing octokit"
+    begin
       client = Octokit::Client.new :access_token => auth_token
       user = client.user
+      if user.nil?
+        Rails.logger.error "there was some kind of problem logging to github"
+        return
+      end
       Rails.logger.debug "login"
-      user.login 
+      user.login
       Rails.logger.debug "get repos"
-      repos = user.rels[:repos].get.data
-      repos.each do |repo|
-        if !Repo.find_by_name(repo.name)
-          begin
-            filename = "https://raw.github.com/#{name}/#{repo.name}/master/Gemfile.lock"
-            Rails.logger.debug "trying to download #{filename}"
-            open(filename)
-            Rails.logger.debug "saving repo to database"
-            r = Repo.new
-            r.name = repo.name
-            r.user = self
-            r.save
-          rescue
-            Rails.logger.debug "#{filename} does not exist. Ignoring repo ..."
-          end
+      repos = user.rels[:repos]
+      if repos.nil?
+        Rails.logger.error "there was some kind of problem getting repos from github"
+        return
+      end
+      repos = repos.get
+      if repos.nil?
+        Rails.logger.error "there was some kind of problem getting repos from github"
+        return
+      end
+      repos = repo.data
+      if repos.nil?
+        Rails.logger.error "there was some kind of problem getting repos from github"
+        return
+      end
+    rescue Exception => e
+      Rails.logger.error "there was some kind of problem interacting with github"
+      return
+    end
+    return if !repos
+    repos.each do |repo|
+      if !Repo.find_by_name(repo.name)
+        begin
+          filename = "https://raw.github.com/#{name}/#{repo.name}/master/Gemfile.lock"
+          Rails.logger.debug "trying to download #{filename}"
+          open(filename)
+        rescue
+          Rails.logger.debug "#{filename} does not exist. Ignoring repo ..."
+          next
+        end
+        Rails.logger.debug "saving repo to database"
+        r = Repo.new
+        r.name = repo.name
+        r.user = self
+        if !r.save
+          Rails.logger.debug "Some error occured saving repo #{r.name}"
         end
       end
     end
   end
+
   private
+
   def generate_access_token
     begin
       self.api_access_token = SecureRandom.hex

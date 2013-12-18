@@ -23,7 +23,9 @@ class GemsStatusWrapper
     runner.execute
     insert_into_database(runner, ruby_application)
     lr = LastRun.new
-    lr.save
+    if !lr.save
+      puts "ERROR: There was a problem saving #{lr}"
+    end
   end
 
   private
@@ -66,16 +68,21 @@ class GemsStatusWrapper
     puts "DEBUG: Inserting gems"
     runner.gem_list.each do |name, gem|
       puts "DEBUG: #{name}"
-      if !RubyGem.exists?(:name => gem.name, :version => gem.version.to_s)
+      rg = RubyGem.find_by(:name => gem.name, :version => gem.version.to_s)
+      if !rg.nil?
         rg = RubyGem.new
         rg.name = gem.name
         rg.version = gem.version.to_s
         rg.license = gem.license
         rg.ruby_applications = [ruby_application]
-        rg.save
+        if !rg.save
+          puts "ERROR: There was a problem inserting #{name} gem into the database"
+        end
       else
-        rg = RubyGem.find_by(:name => gem.name, :version => gem.version.to_s)
         rg.ruby_applications << ruby_application unless rg.ruby_applications.include? ruby_application
+        if !rg.save
+          puts "ERROR: There was a problem inserting #{name} gem into the database"
+        end
       end
     end
   end
@@ -102,7 +109,9 @@ class GemsStatusWrapper
           sa.status = 0
           sa.comment = ""
           sa.sec_key = sec_key
-          sa.save
+          if !sa.save
+            puts "ERROR: There was a problem inserting #{sa.sec_key} into the database"
+          end
         end
       end
     end
