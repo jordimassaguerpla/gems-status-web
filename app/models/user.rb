@@ -40,7 +40,7 @@ class User < ActiveRecord::Base
         return
       end
     rescue Exception => e
-      Rails.logger.error "there was some kind of problem interacting with github"
+      Rails.logger.error "there was some kind of problem interacting with github #{e.message}"
       return
     end
     return if !repos
