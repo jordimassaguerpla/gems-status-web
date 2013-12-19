@@ -101,7 +101,7 @@ class GemsStatusWrapper
     runner.gem_list.each do |name, gem|
       puts "DEBUG: #{name}"
       rg = RubyGem.find_by(:name => gem.name, :version => gem.version.to_s)
-      if !rg.nil?
+      if rg.nil?
         rg = RubyGem.new
         rg.name = gem.name
         rg.version = gem.version.to_s
