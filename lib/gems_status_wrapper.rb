@@ -1,6 +1,35 @@
 class GemsStatusWrapper
 
   def run(ruby_application)
+    # I know this is very very ugly and hacky but seems that heroku has a limitation in the git binary they have installed
+    #  git clone http://.... does not work
+    #  git clone https://... does
+    # thus, I am rewriting the gem_uri function
+    # I hope one day I can remove this hack
+    # FIXME in the future
+    module GemsStatus
+      class NotASecurityAlertChecker
+
+        private
+
+        def gem_uri(gg)
+          if gem_version_information["project_uri"] &&
+             gem_version_information["project_uri"].include?("github")
+            return gem_version_information["project_uri"].gsub("http:","https:")
+          elsif gem_version_information["homepage_uri"] &&
+             gem_version_information["homepage_uri"].include?("github")
+            return gem_version_information["homepage_uri"].gsub("http:","https:")
+
+          elsif gem_version_information["source_code_uri"] &&
+             gem_version_information["source_code_uri"].include?("github")
+            return gem_version_information["source_code_uri"].gsub("http:","https:")
+
+          else
+            return nil
+          end
+        end
+      end
+    end
     begin
       local_path = "/tmp/gemfiles/#{ruby_application.name}"
       local_filename = local_path + "/" + "Gemfile.lock"
