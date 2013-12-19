@@ -10,20 +10,22 @@ module GemsStatus
     private
 
     def gem_uri(gem_version_information)
+      result = nil
       if gem_version_information["project_uri"] &&
          gem_version_information["project_uri"].include?("github")
-        return gem_version_information["project_uri"].gsub("http:","https:")
+        result = gem_version_information["project_uri"]
       elsif gem_version_information["homepage_uri"] &&
          gem_version_information["homepage_uri"].include?("github")
-        return gem_version_information["homepage_uri"].gsub("http:","https:")
+        result = gem_version_information["homepage_uri"]
 
       elsif gem_version_information["source_code_uri"] &&
          gem_version_information["source_code_uri"].include?("github")
-        return gem_version_information["source_code_uri"].gsub("http:","https:")
+        result = gem_version_information["source_code_uri"]
 
       else
         return nil
       end
+      result.gsub("http:","https:").gsub("www.github","github")
     end
   end
 end
