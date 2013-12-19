@@ -9,7 +9,7 @@ module GemsStatus
 
     private
 
-    def gem_uri(gg)
+    def gem_uri(gem_version_information)
       if gem_version_information["project_uri"] &&
          gem_version_information["project_uri"].include?("github")
         return gem_version_information["project_uri"].gsub("http:","https:")
