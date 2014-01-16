@@ -60,6 +60,7 @@ class GemsStatusWrapper
 
   def insert_gems(runner, ruby_application)
     puts "DEBUG: Inserting gems"
+    ruby_application.ruby_gems.delete_all
     runner.gem_list.each do |name, gem|
       puts "DEBUG: #{name}"
       if !RubyGem.exists?(:name => gem.name, :version => gem.version.to_s)
