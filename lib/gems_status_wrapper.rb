@@ -90,8 +90,8 @@ class GemsStatusWrapper
             puts "ERROR: I could not find #{gem.name} : #{gem.version.to_s}"
             exit -1
           end
-          next if SecurityAlert.exists?(:sec_key => sec_key, :ruby_gem_id => rg.id, :ruby_application_id => ruby_application.id)
-          sa = SecurityAlert.new
+          sa = SecurityAlert.find(:sec_key => sec_key)
+          sa = SecurityAlert.new if sa.nil?
           sa.desc = desc
           sa.ruby_gem = rg
           sa.ruby_application = ruby_application
