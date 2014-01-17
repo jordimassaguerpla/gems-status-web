@@ -98,6 +98,7 @@ class GemsStatusWrapper
 
   def insert_gems(runner, ruby_application)
     puts "DEBUG: Inserting gems"
+    ruby_application.ruby_gems.delete_all
     runner.gem_list.each do |name, gem|
       puts "DEBUG: #{name}"
       rg = RubyGem.find_by(:name => gem.name, :version => gem.version.to_s)
@@ -132,8 +133,8 @@ class GemsStatusWrapper
             puts "ERROR: I could not find #{gem.name} : #{gem.version.to_s}"
             exit -1
           end
-          next if SecurityAlert.exists?(:sec_key => sec_key, :ruby_gem_id => rg.id, :ruby_application_id => ruby_application.id)
-          sa = SecurityAlert.new
+          sa = SecurityAlert.find_by(:sec_key => sec_key)
+          sa = SecurityAlert.new if sa.nil?
           sa.desc = desc
           sa.ruby_gem = rg
           sa.ruby_application = ruby_application

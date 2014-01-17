@@ -8,8 +8,7 @@ class SecurityAlert < ActiveRecord::Base
   STATUS_CODES = {
     0 => "Pending",
     1 => "Confirmed",
-    2 => "Ignored",
-    3 => "Refused"
+    2 => "Ignored"
   }
 
   def status_text

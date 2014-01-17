@@ -12,9 +12,9 @@
 </p>
 <p>
 <% SecurityAlert.where("'desc' = '#{@security_alert.desc}' and 'id' != '#{@security_alert.id}'").each do |sa| %>
+  <%= sa.comment %> 
   <% next if sa.status == 0 %>
   <%= sa.status_text %>
-  <%= sa.comment %> 
   <% if sa.version_fix && sa.status == 1 %>
     Fixed in:
     <%= sa.version_fix %>
