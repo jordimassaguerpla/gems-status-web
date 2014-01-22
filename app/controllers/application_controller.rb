@@ -43,7 +43,11 @@ class ApplicationController < ActionController::Base
   def user_by_params
     return User.find_by_api_access_token(params[:api_access_token]) if params[:api_access_token]
     user = User.find_by_email(params[:email])
-    user if user && user.authenticate(params[:password])
+    return nil unless user
+    return nil unless user.authenticate(params[:password])
+    user.times_logged_in = user.times_logged_in + 1
+    user.save
+    user
   end
 
   private
