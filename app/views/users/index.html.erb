@@ -6,6 +6,10 @@
       <tr>
         <td><%= link_to user.name, user %></td>
         <td><%= user.times_logged_in %> times logged in</td>
+        <td>
+          <% if user.beta_user%>
+            Beta User
+          <% end %> 
         <td><%= link_to "Edit", edit_user_path(user) %></td>
         <td><%= link_to "Destroy", user, method: :delete, data: { confirm: "Are you sure?" } %></td>
       </tr>
