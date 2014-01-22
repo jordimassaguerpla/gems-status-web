@@ -59,6 +59,7 @@ class ApplicationController < ActionController::Base
     return nil if auth.nil?
     user = User.find_by_provider_and_uid(auth["provider"], auth["uid"]) || User.create_with_omniauth(auth)
     user.auth_token = auth['credentials']['token'] if auth['credentials'] && auth['credentials']['token']
+    user.times_logged_in = user.times_logged_in + 1
     user.save
     user
   end

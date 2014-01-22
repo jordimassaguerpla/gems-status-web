@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
   has_many :repos
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true
+  validates :times_logged_in, numericality: { only_integer: true }
 
   def repo_names
     repos.collect(&:name)
