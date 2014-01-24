@@ -20,6 +20,16 @@ class SecurityAlert < ActiveRecord::Base
   end
 
   def similars
-    SecurityAlert.where("desc = '#{desc}' and id != '#{id}'")
+    result = []
+    sas = SecurityAlert.where("desc = '#{desc}' and id != '#{id}'")
+    sas.each do |sa|
+      result << SecurityAlert.new(
+        :desc => sa.desc,
+        :version_fix => sa.version_fix,
+        :status => sa.status,
+        :comment => sa.comment
+      )
+    end
+    result
   end
 end

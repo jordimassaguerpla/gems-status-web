@@ -9,10 +9,11 @@ class SecurityAlertTest < ActiveSupport::TestCase
     sa2.desc = "B"
     sa2.save
     result = sa1.similars
-    assert(!result.include?(sa2))
+    assert_equal result, []
     sa2.desc = "A"
     sa2.save
     result = sa1.similars
-    assert(result.include?(sa2))
+    assert result.length == 1
+    assert_equal result[0].desc, sa2.desc
   end
 end

@@ -83,4 +83,9 @@ class SecurityAlertsControllerTest < ActionController::TestCase
     assert_equal expected, SecurityAlert.count
     assert_redirected_to root_url 
   end
+
+  test "should show similars" do
+    get :similars, security_alert_id: security_alerts(:one)
+    assert_response :success
+  end
 end
