@@ -18,4 +18,8 @@ class SecurityAlert < ActiveRecord::Base
   def short_desc
     "#{desc[0..25]} ..."
   end
+
+  def similars
+    SecurityAlert.where("desc = '#{desc}' and id != '#{id}'")
+  end
 end
