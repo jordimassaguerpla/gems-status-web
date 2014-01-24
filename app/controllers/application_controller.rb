@@ -42,6 +42,7 @@ class ApplicationController < ActionController::Base
       return false if current_user && params[:controller] == "security_alerts" && params[:id] && current_user.ruby_applications.include?(SecurityAlert.find(params[:id]).ruby_application)
       return false if current_user && params[:controller] == "users" && params[:id] && params[:id] == current_user.id.to_s && params[:action] == "show"
       return false if current_user && params[:controller] == "users" && params[:user_id] && params[:user_id] == current_user.id.to_s && params[:action] == "import_repos"
+      return false if current_user && params[:controller] == "security_alerts"&& params[:action] == "similars" 
       flash[:error] = "Unauthorized access"
     else
       flash[:error] = "Sorry this is limited to beta users"

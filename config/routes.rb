@@ -5,7 +5,9 @@ GemsStatusWeb::Application.routes.draw do
   resources :sessions
   resources :source_repos
 
-  resources :security_alerts
+  resources :security_alerts do
+    get 'similars'
+  end
 
   resources :users do
     get 'import_repos'
