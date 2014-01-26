@@ -1,12 +1,11 @@
 GemsStatusWeb::Application.routes.draw do
   get 'home', to: 'home#index'
+  get 'sa_similars', to:'home#sa_similars'
   resources :reports
   resources :sessions
   resources :source_repos
 
-  resources :security_alerts do
-    get 'similars'
-  end
+  resources :security_alerts
 
   resources :users
 

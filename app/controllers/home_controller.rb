@@ -7,4 +7,15 @@ class HomeController < ApplicationController
     end
     @security_alerts.flatten!
   end
+  def sa_similars
+    if !params["desc"]
+      @similars = "specify desc"
+      return
+    end
+    sa = SecurityAlert.new(
+      :desc => params["desc"],
+      :status => 0
+    )
+    @similars = sa.similars
+  end
 end
