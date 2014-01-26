@@ -27,25 +27,6 @@ class SecurityAlertsController < ApplicationController
     end
   end
 
-  # GET /security_alerts/1/similars
-  # GET /security_alerts/1/similars.json
-  def similars
-    sa = SecurityAlert.find(params[:security_alert_id])
-    if sa
-      @similars = sa.similars
-    else
-      @similars = []
-    end
-    respond_to do |format|
-      format.html { render action: 'similars' }
-      if @similars
-        format.json { render json: @similars }
-      else
-        format.json { render json: "no security alert with #{params[:id]}" }
-      end
-    end
-  end
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_security_alert
