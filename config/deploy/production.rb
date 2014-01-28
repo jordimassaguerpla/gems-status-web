@@ -1,3 +1,10 @@
+if !ENV['SERVER']
+  puts "set SERVER env variable"
+  puts "i.e."
+  puts "SERVER=redruby.io cap production deploy"
+  exit -1
+end
+
 set :stage, :staging
 set :rails_env, :production
 
@@ -6,9 +13,9 @@ set :rails_env, :production
 # Supports bulk-adding hosts to roles, the primary
 # server in each group is considered to be the first
 # unless any hosts have the primary property set.
-role :app, %w{deploy@redruby.io}
-role :web, %w{deploy@redruby.io}
-role :db,  %w{deploy@redruby.io}
+role :app, "deploy@#{ENV['SERVER']}" 
+role :web, "deploy@#{ENV['SERVER']}"
+role :db, "deploy@#{ENV['SERVER']}"
 
 # Extended Server Syntax
 # ======================
@@ -16,7 +23,7 @@ role :db,  %w{deploy@redruby.io}
 # definition into the server list. The second argument
 # something that quacks like a has can be used to set
 # extended properties on the server.
-server 'redruby.io', user: 'deploy', roles: %w{web app db}
+server ENV['SERVER'], user: 'deploy', roles: %w{web app db}
 #, my_property: :my_value
 
 # you can set custom ssh options
