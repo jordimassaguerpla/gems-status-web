@@ -24,10 +24,12 @@ class SecurityAlert < ActiveRecord::Base
     sas = SecurityAlert.where("desc = '#{desc}' and id != '#{id}'")
     sas.each do |sa|
       result << SecurityAlert.new(
+        :id => sa.id,
         :desc => sa.desc,
         :version_fix => sa.version_fix,
         :status => sa.status,
-        :comment => sa.comment
+        :comment => sa.comment,
+        :extid => sa.extid
       )
     end
     result
