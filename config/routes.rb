@@ -1,19 +1,24 @@
 GemsStatusWeb::Application.routes.draw do
   get 'home', to: 'home#index'
   get 'sa_similars', to:'home#sa_similars'
+  get 'ping', to: 'home#ping'
   resources :reports
   resources :sessions
   resources :source_repos
 
   resources :security_alerts
 
-  resources :users
+  resources :users do
+    get 'import_repos'
+  end
 
   resources :ruby_applications do
     get 'result'
   end
 
   root 'sessions#new'
+
+  get "/auth/:provider/callback" => "sessions#create"
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

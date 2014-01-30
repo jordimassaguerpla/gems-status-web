@@ -1,3 +1,35 @@
+# I know this is very very ugly and hacky but seems that heroku has a limitation in the git binary they have installed
+#  git clone http://.... does not work
+#  git clone https://... does
+# thus, I am rewriting the gem_uri function
+# I hope one day I can remove this hack
+# FIXME in the future
+module GemsStatus
+  class NotASecurityAlertChecker
+
+    private
+
+    def gem_uri(gem_version_information)
+      result = nil
+      if gem_version_information["project_uri"] &&
+         gem_version_information["project_uri"].include?("github")
+        result = gem_version_information["project_uri"]
+      elsif gem_version_information["homepage_uri"] &&
+         gem_version_information["homepage_uri"].include?("github")
+        result = gem_version_information["homepage_uri"]
+
+      elsif gem_version_information["source_code_uri"] &&
+         gem_version_information["source_code_uri"].include?("github")
+        result = gem_version_information["source_code_uri"]
+
+      else
+        return nil
+      end
+      result.gsub("http:","https:").gsub("www.github","github")
+    end
+  end
+end
+
 class GemsStatusWrapper
 
   def run(ruby_application)
@@ -18,16 +50,22 @@ class GemsStatusWrapper
     }
     runner = GemsStatus::Runner.new
     runner.source = GemsStatus::LockfileGems.new(conf)
-    runner.add_checker(not_a_security_alert_checker(ruby_application))
+    checker = not_a_security_alert_checker(ruby_application)
+    runner.add_checker(checker) if checker
     runner.execute
     insert_into_database(runner, ruby_application)
     lr = LastRun.new
-    lr.save
+    if !lr.save
+      puts "ERROR: There was a problem saving #{lr}"
+    end
   end
 
   private
 
   def not_a_security_alert_checker(ruby_application)
+      return nil if !ENV["GMAIL_USERNAME"]
+      return nil if !ENV["GMAIL_PASSWORD"]
+      return nil if !ENV["MAILING_LISTS"]
       source_repos = {}
       SourceRepo.all.to_a.each { |a| source_repos[a.name] = a.url }
       fixed = {}
@@ -43,9 +81,9 @@ class GemsStatusWrapper
         "classname" => "NotASecurityAlertChecker",
         "fixed" => fixed,
         "source_repos" => source_repos,
-        "email_username" => CONFIG["GMAIL_USERNAME"],
-        "email_password" => CONFIG["GMAIL_PASSWORD"],
-        "mailing_lists" => CONFIG["mailing_lists"],
+        "email_username" => ENV["GMAIL_USERNAME"],
+        "email_password" => ENV["GMAIL_PASSWORD"],
+        "mailing_lists" => ENV["MAILING_LISTS"].split,
         "email_to" => [ruby_application.user.email]
 
       }
@@ -63,16 +101,21 @@ class GemsStatusWrapper
     ruby_application.ruby_gems.delete_all
     runner.gem_list.each do |name, gem|
       puts "DEBUG: #{name}"
-      if !RubyGem.exists?(:name => gem.name, :version => gem.version.to_s)
+      rg = RubyGem.find_by(:name => gem.name, :version => gem.version.to_s)
+      if rg.nil?
         rg = RubyGem.new
         rg.name = gem.name
         rg.version = gem.version.to_s
         rg.license = gem.license
         rg.ruby_applications = [ruby_application]
-        rg.save
+        if !rg.save
+          puts "ERROR: There was a problem inserting #{name} gem into the database"
+        end
       else
-        rg = RubyGem.find_by(:name => gem.name, :version => gem.version.to_s)
         rg.ruby_applications << ruby_application unless rg.ruby_applications.include? ruby_application
+        if !rg.save
+          puts "ERROR: There was a problem inserting #{name} gem into the database"
+        end
       end
     end
   end
@@ -99,7 +142,9 @@ class GemsStatusWrapper
           sa.status = 0
           sa.comment = ""
           sa.sec_key = sec_key
-          sa.save
+          if !sa.save
+            puts "ERROR: There was a problem inserting #{sa.sec_key} into the database"
+          end
         end
       end
     end

@@ -18,4 +18,8 @@ class HomeController < ApplicationController
     )
     @similars = sa.similars
   end
+
+  def ping
+  end
+
 end

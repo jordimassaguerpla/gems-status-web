@@ -18,7 +18,7 @@ class RubyApplication < ActiveRecord::Base
     filtered_security_alerts.each do |sa|
       gems << sa.ruby_gem.name
     end
-    gems.uniq!
+    gems.uniq
   end
 
   def filtered_security_alerts

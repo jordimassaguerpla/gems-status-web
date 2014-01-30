@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20140122182656) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "delayed_jobs", force: true do |t|
     t.integer  "priority",   default: 0, null: false
     t.integer  "attempts",   default: 0, null: false
@@ -27,11 +30,18 @@ ActiveRecord::Schema.define(version: 20140122182656) do
     t.datetime "updated_at"
   end
 
-  add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority"
+  add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
 
   create_table "last_runs", force: true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "repos", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "user_id"
   end
 
   create_table "ruby_application_ruby_gem_relationships", force: true do |t|
@@ -44,7 +54,7 @@ ActiveRecord::Schema.define(version: 20140122182656) do
   create_table "ruby_applications", force: true do |t|
     t.string   "name"
     t.string   "filename"
-    t.string   "gems_url"
+    t.string   "gems_url",   default: "https://rubygems.org/gems"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
@@ -61,7 +71,7 @@ ActiveRecord::Schema.define(version: 20140122182656) do
   create_table "security_alerts", force: true do |t|
     t.integer  "ruby_gem_id"
     t.integer  "ruby_application_id"
-    t.text     "desc",                limit: 255
+    t.text     "desc"
     t.string   "version_fix"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -82,10 +92,13 @@ ActiveRecord::Schema.define(version: 20140122182656) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "email"
-    t.string   "password_digest"
     t.integer  "admin",            default: 0
     t.integer  "role"
     t.string   "api_access_token"
+    t.string   "provider"
+    t.string   "uid"
+    t.integer  "beta_user",        default: 0
+    t.string   "auth_token"
     t.integer  "times_logged_in",  default: 0
   end
 

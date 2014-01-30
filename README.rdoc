@@ -8,6 +8,7 @@ Download the gems-status-web-os from SUSE Studio Gallery http://susestudio.com/a
   - copy your ssh public key to the .ssh directory of the deploy user
   - change root password or whatever your security policies say about root access (have another user , disable ssh, ...)
   - edit /srv/www/vhosts/gems-status-web/shared/config/application.yml to set up your mail credentials
+  - set GITHUB_KEY and GITHUB_SECRET environment variables 
 
 On your workstation:
 
@@ -16,6 +17,7 @@ On your workstation:
   - run "cap staging deploy:seed" (or "cap production deploy")
   - run "cap staging delayed_job:start" (or "cap production delayed_job:start")
 
-Access the web interface as admin@localhost/secret and change the admin password.
-Add users (throuhg the web interface)
+Login with your github user.
+Add admin privileges using the rails console to your user in the database.
+ 
 

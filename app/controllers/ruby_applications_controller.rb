@@ -12,6 +12,7 @@ class RubyApplicationsController < ApplicationController
   def edit
     @path = RubyApplication.find(params[:id]).name
     @ruby_application = RubyApplication.find(params[:id])
+    @repo_names = current_user.repo_names
     @user = @ruby_application.user
   end
 
@@ -41,10 +42,13 @@ class RubyApplicationsController < ApplicationController
     end
   end
 
+
   # GET /ruby_application/new
   def new
     return if !check_max
+    @user = current_user
     @ruby_application = RubyApplication.new
+    @repo_names = current_user.repo_names
   end
 
   # POST /ruby_application
@@ -53,6 +57,7 @@ class RubyApplicationsController < ApplicationController
     return if !check_max
     @ruby_application = RubyApplication.new(ruby_application_params)
     @ruby_application.user = current_user
+    @ruby_application.filename = "https://raw.github.com/#{current_user.name}/#{@ruby_application.name}/master/Gemfile.lock"
 
     respond_to do |format|
       if @ruby_application.save
@@ -86,7 +91,7 @@ class RubyApplicationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def ruby_application_params
-      params.require(:ruby_application).permit(:name, :filename, :gems_url)
+      params.require(:ruby_application).permit(:name)
     end
 
     def check_max
