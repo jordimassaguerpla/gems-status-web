@@ -1,2 +1,6 @@
+GMAIL_USERNAME: ""
+GMAIL_PASSWORD: ""
+MAILING_LISTS:
+  "rubyonrails-security@googlegroups.com"
 
 
