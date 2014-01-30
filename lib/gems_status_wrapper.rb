@@ -25,6 +25,40 @@ class GemsStatusWrapper
     lr.save
   end
 
+  def insert_similars(sa)
+    return unless sa
+    if !CONFIG["PARENT_SERVER"] || !CONFIG["PARENT_SERVER_API_ACCESS_TOKEN"]
+      puts "DEBUG: no parent server configuration"
+      return
+    end
+    parent_server = CONFIG["PARENT_SERVER"]
+    parent_server_api_access_token = CONFIG["PARENT_SERVER_API_ACCESS_TOKEN"]
+
+    begin
+      url = URI::Parser.new.escape("#{parent_server}/sa_similars.json?api_access_token=#{parent_server_api_access_token};desc=#{sa.desc}")
+      similars = JSON.parse(open(url).read)
+    rescue Exception => e
+      puts "ERROR: I could not find similars #{e}"
+      return
+    end
+    similars.each do |s|
+      if !s["id"] || !s["desc"]
+        puts "ERROR: missing fields in json response from #{parent_server}"
+        puts s
+      end
+      extid = s["extid"]?s["ext_id"]:"#{parent_server}_#{s["id"].to_s}"
+      next if SecurityAlert.find_by_extid(extid)
+      new_sa = SecurityAlert.new(
+        :extid => extid,
+        :desc => s["desc"],
+        :version_fix => s["version_fix"],
+        :status => s["status"],
+        :comment => s["comment"]
+      )
+      new_sa.save
+    end
+  end
+
   private
 
   def not_a_security_alert_checker(ruby_application)
@@ -45,7 +79,7 @@ class GemsStatusWrapper
         "source_repos" => source_repos,
         "email_username" => CONFIG["GMAIL_USERNAME"],
         "email_password" => CONFIG["GMAIL_PASSWORD"],
-        "mailing_lists" => CONFIG["mailing_lists"],
+        "mailing_lists" => CONFIG["MAILING_LISTS"],
         "email_to" => [ruby_application.user.email]
 
       }
@@ -64,6 +98,7 @@ class GemsStatusWrapper
     runner.gem_list.each do |name, gem|
       puts "DEBUG: #{name}"
       if !RubyGem.exists?(:name => gem.name, :version => gem.version.to_s)
+        puts "DEBUG: adding new gem #{gem.name}"
         rg = RubyGem.new
         rg.name = gem.name
         rg.version = gem.version.to_s
@@ -71,6 +106,7 @@ class GemsStatusWrapper
         rg.ruby_applications = [ruby_application]
         rg.save
       else
+        puts "DEBUG: updating gem #{gem.name}"
         rg = RubyGem.find_by(:name => gem.name, :version => gem.version.to_s)
         rg.ruby_applications << ruby_application unless rg.ruby_applications.include? ruby_application
       end
@@ -100,6 +136,7 @@ class GemsStatusWrapper
           sa.comment = ""
           sa.sec_key = sec_key
           sa.save
+          insert_similars(sa)
         end
       end
     end
