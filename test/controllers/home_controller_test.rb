@@ -15,6 +15,7 @@ class HomeControllerTest < ActionController::TestCase
     session[:user_id] = nil
     get :sa_similars
     assert_redirected_to new_session_path
+  end
 
   test "index" do
     get 'index'
