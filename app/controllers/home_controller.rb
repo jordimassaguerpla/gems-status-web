@@ -17,6 +17,10 @@ class HomeController < ApplicationController
       :status => 0
     )
     @similars = sa.similars
+    respond_to do |format|
+      format.html { render 'sa_similars' }
+      format.json { render json: @similars }
+    end
   end
 
   def ping

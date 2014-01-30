@@ -60,6 +60,40 @@ class GemsStatusWrapper
     end
   end
 
+  def insert_similars(sa)
+    return unless sa
+    if !CONFIG["PARENT_SERVER"] || !CONFIG["PARENT_SERVER_API_ACCESS_TOKEN"]
+      puts "DEBUG: no parent server configuration"
+      return
+    end
+    parent_server = CONFIG["PARENT_SERVER"]
+    parent_server_api_access_token = CONFIG["PARENT_SERVER_API_ACCESS_TOKEN"]
+
+    begin
+      url = URI::Parser.new.escape("#{parent_server}/sa_similars.json?api_access_token=#{parent_server_api_access_token};desc=#{sa.desc}")
+      similars = JSON.parse(open(url).read)
+    rescue Exception => e
+      puts "ERROR: I could not find similars #{e}"
+      return
+    end
+    similars.each do |s|
+      if !s["id"] || !s["desc"]
+        puts "ERROR: missing fields in json response from #{parent_server}"
+        puts s
+      end
+      extid = s["extid"]?s["ext_id"]:"#{parent_server}_#{s["id"].to_s}"
+      next if SecurityAlert.find_by_extid(extid)
+      new_sa = SecurityAlert.new(
+        :extid => extid,
+        :desc => s["desc"],
+        :version_fix => s["version_fix"],
+        :status => s["status"],
+        :comment => s["comment"]
+      )
+      new_sa.save
+    end
+  end
+
   private
 
   def not_a_security_alert_checker(ruby_application)
@@ -81,9 +115,9 @@ class GemsStatusWrapper
         "classname" => "NotASecurityAlertChecker",
         "fixed" => fixed,
         "source_repos" => source_repos,
-        "email_username" => ENV["GMAIL_USERNAME"],
-        "email_password" => ENV["GMAIL_PASSWORD"],
-        "mailing_lists" => ENV["MAILING_LISTS"].split,
+        "email_username" => CONFIG["GMAIL_USERNAME"],
+        "email_password" => CONFIG["GMAIL_PASSWORD"],
+        "mailing_lists" => CONFIG["MAILING_LISTS"].split,
         "email_to" => [ruby_application.user.email]
 
       }
@@ -145,6 +179,7 @@ class GemsStatusWrapper
           if !sa.save
             puts "ERROR: There was a problem inserting #{sa.sec_key} into the database"
           end
+          insert_similars(sa)
         end
       end
     end
