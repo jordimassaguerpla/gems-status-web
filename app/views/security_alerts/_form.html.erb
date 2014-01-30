@@ -32,7 +32,8 @@
  What others have said:
 </p>
 <p>
-<% @security_alert.ruby_gem.security_alerts.where("'desc' = '#{@security_alert.desc}' and 'id' != '#{@security_alert.id}'").each do |sa| %>
+<% @security_alert.ruby_gem.security_alerts.find_all_by_desc(@security_alert.desc).each do |sa| %>
+  <% next if sa.id == @security_alert.id %>
   <%= sa.status_text %>
   <%= sa.comment %><br/>
   Fixed in:

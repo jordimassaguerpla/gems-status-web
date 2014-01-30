@@ -21,8 +21,9 @@ class SecurityAlert < ActiveRecord::Base
 
   def similars
     result = []
-    sas = SecurityAlert.where("desc = '#{desc}' and id != '#{id}'")
+    sas = SecurityAlert.find_all_by_desc(desc)
     sas.each do |sa|
+      next if sa.id == id
       result << SecurityAlert.new(
         :id => sa.id,
         :desc => sa.desc,

@@ -26,7 +26,7 @@ class RubyApplication < ActiveRecord::Base
     @sa = []
     return @sa unless ruby_gems
     ruby_gems.each do |rg|
-      security_alerts.where("ruby_gem_id = '?'", rg.id).each do |sa|
+      security_alerts.find_all_by_ruby_gem_id(rg.id).each do |sa|
         next unless sa.ruby_application
         next if sa.version_fix && sa.version_fix != "" && Gem::Version.new(sa.version_fix) <= Gem::Version.new(rg.version)
         next if SecurityAlert::STATUS_CODES[sa.status] == "Ignored"
