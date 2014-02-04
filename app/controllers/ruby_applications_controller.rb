@@ -57,7 +57,9 @@ class RubyApplicationsController < ApplicationController
     return if !check_max
     @ruby_application = RubyApplication.new(ruby_application_params)
     @ruby_application.user = current_user
-    @ruby_application.filename = "https://raw.github.com/#{current_user.name}/#{@ruby_application.name}/master/Gemfile.lock"
+    if CONFIG['GITHUB_INTEGRATION']
+      @ruby_application.filename = "https://raw.github.com/#{current_user.name}/#{@ruby_application.name}/master/Gemfile.lock"
+    end
 
     respond_to do |format|
       if @ruby_application.save
