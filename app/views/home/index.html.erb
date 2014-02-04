@@ -1,6 +1,8 @@
 <% if current_user && !beta_user? %>
   Sorry. This is limited to beta_users.
-  If you'd like to be a beta user, <a href="https://docs.google.com/forms/d/1wIo2dhUn34n-9Tm04mkUnoaV7aB_RXFnm5MVGZ0CS8g/viewform">contact us</a>.
+  <% if CONFIG['BETA_USER_LINK'] %>
+    If you'd like to be a beta user, <a href="<%= CONFIG['BETA_USER_LINK'] %>">contact us</a>.
+  <% end %>
 
 <% elsif current_user %>
   <p>Hi <%= current_user.name %>, welcome to <span class="alert"><%= request.host %></a></p>
