@@ -11,6 +11,7 @@ class HomeControllerTest < ActionController::TestCase
     get :sa_similars
     assert_response :success
   end
+
   test "should not show sa_similars with no user" do
     session[:user_id] = nil
     get :sa_similars
