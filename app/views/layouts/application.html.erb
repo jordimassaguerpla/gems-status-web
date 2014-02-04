@@ -27,6 +27,9 @@
   <% end %>
 </div>
 <div id="top-right">
+  <% if CONFIG['FEEDBACK_LINK'] %>
+      <a target="_new" href="">Feedback</a>
+    <% end %>
   <a target="_new" href="https://github.com/jordimassaguerpla/gems-status-web/blob/master/README.md">Help</a>
   <% if current_user %>
     <% if is_admin? %>
