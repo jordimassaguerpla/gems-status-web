@@ -7,8 +7,8 @@ class User < ActiveRecord::Base
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true
   validates :times_logged_in, numericality: { only_integer: true }
-
-  has_secure_password
+  
+  has_secure_password(validations: false)
 
   def repo_names
     repos.collect(&:name)

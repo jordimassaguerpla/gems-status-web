@@ -58,6 +58,7 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test "admin should create user with github" do
+    CONFIG['GITHUB_INTEGRATION'] = true
     session[:user_id] = users(:one)
     assert_difference("User.count") do
       post :create, user: { name: @user.name, email: "new email"} 
