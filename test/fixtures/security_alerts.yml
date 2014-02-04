@@ -2,7 +2,6 @@
 
 one:
   ruby_gem: :one
-  ruby_application_id: 
   desc: MyString
   version_fix: 1.1.1
   ruby_application: :one
@@ -10,7 +9,6 @@ one:
 
 two:
   ruby_gem: :two
-  ruby_application_id: 
   desc: MyString
   version_fix: 2.2.2
   ruby_application: :two

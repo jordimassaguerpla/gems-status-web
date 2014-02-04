@@ -4,8 +4,8 @@ ruby '1.9.3'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.2'
 
-# Use sqlite3 as the database for Active Record in development
-gem 'sqlite3'
+# Use pg as the database for Active Record in development
+gem 'pg'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
@@ -71,4 +71,19 @@ gem 'foreman', :group => :development
 gem 'omniauth-github'
 gem 'octokit'
 
+
+# Heroku integration
+gem 'rails_12factor', group: :production
+
+# Webserver recommended for heroku
+gem 'unicorn'
+
+# Foreman manage Procfile-based applications
+# Heroku requires Procfile
+# thus foreman "simulates" having heroku on development
+gem 'foreman', :group => :development
+
+# Integration with github
+gem 'omniauth-github'
+gem 'octokit'
 

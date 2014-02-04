@@ -1,9 +1,9 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  ruby_application_id: 1
-  ruby_gem_id: 1
+  ruby_application: :one
+  ruby_gem: :one
 
 two:
-  ruby_application_id: 1
-  ruby_gem_id: 1
+  ruby_application: :two
+  ruby_gem: :two

@@ -1,4 +1,5 @@
 require 'test_helper'
+
 class User
   def authenticate(password)
     true
@@ -6,6 +7,7 @@ class User
 end
 
 class SessionsControllerTest < ActionController::TestCase
+
   test "should get new" do
     get :new
     assert_response :success
@@ -60,4 +62,5 @@ class SessionsControllerTest < ActionController::TestCase
     delete :destroy, id: "null"
     assert session[:user_id].nil?
   end
+
 end

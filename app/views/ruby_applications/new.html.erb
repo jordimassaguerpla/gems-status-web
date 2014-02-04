@@ -1,4 +1,7 @@
 <h1>New ruby application for <%= current_user.name %></h1>
+<% if CONFIG['GITHUB_INTEGRATION'] %>
+  <%= link_to "Import repos", user_path(@user) + "/import_repos" %>
+<% end %>
 <%= render 'form' %>
 <%= link_to "Back", home_path %>
 

@@ -1,16 +1,20 @@
 <div id="outer_div" align="center">
-  <div id="login_form">
-    <%= form_tag( controller: :sessions, action: :create, method: :post) do %>
-      <div class="field">
-        <%= label_tag :email %><br />
-        <%= text_field_tag :email, params[:email] %>
-      </div>
-      <div class="field">
-        <%= label_tag :password %><br />
-        <%= password_field_tag :password %>
-      </div>
-      <div class="actions"><%= submit_tag "Log In" %></div>
-    <% end %>
-  </div>
+  <% if CONFIG['GITHUB_INTEGRATION'] %>
+    <%= link_to "Sign in with Github", "/auth/github" %>
+  <% else %>
+    <div id="login_form">
+      <%= form_tag( controller: :sessions, action: :create, method: :post) do %>
+        <div class="field">
+          <%= label_tag :email %><br />
+          <%= text_field_tag :email, params[:email] %>
+        </div>
+        <div class="field">
+          <%= label_tag :password %><br />
+          <%= password_field_tag :password %>
+        </div>
+        <div class="actions"><%= submit_tag "Log In" %></div>
+      <% end %>
+    </div>
+  <% end %>
 </div>
 
