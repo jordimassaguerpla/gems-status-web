@@ -7,8 +7,7 @@ Download the gems-status-web-os from SUSE Studio Gallery http://susestudio.com/a
 
   - copy your ssh public key to the .ssh directory of the deploy user
   - change root password or whatever your security policies say about root access (have another user , disable ssh, ...)
-  - edit /srv/www/vhosts/gems-status-web/shared/config/application.yml to set up your mail credentials
-  - set GITHUB_KEY and GITHUB_SECRET environment variables 
+  - edit /srv/www/vhosts/gems-status-web/shared/config/application.yml (see config/application.rb for the config variables)
 
 On your workstation:
 
