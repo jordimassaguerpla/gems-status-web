@@ -91,7 +91,11 @@ class RubyApplicationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def ruby_application_params
-      params.require(:ruby_application).permit(:name)
+      if CONFIG['GITHUB_INTEGRATION']
+        params.require(:ruby_application).permit(:name)
+      else
+        params.require(:ruby_application).permit(:name, :filename, :gems_url)
+      end
     end
 
     def check_max

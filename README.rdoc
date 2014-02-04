@@ -16,7 +16,14 @@ On your workstation:
   - run "cap staging deploy:seed" (or "cap production deploy")
   - run "cap staging delayed_job:start" (or "cap production delayed_job:start")
 
-Login with your github user.
-Add admin privileges using the rails console to your user in the database.
+Set up admin:
+
+In case you are using github users:
+ - Login with your github user.
+ - Add admin privileges using the rails console to your user in the database.
+
+Otherwise:
+ - Access the web interface as admin@localhost/secret and change the admin password.
+ - Add users (throuhg the web interface)
  
 

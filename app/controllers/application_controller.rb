@@ -50,10 +50,16 @@ class ApplicationController < ActionController::Base
 
   def user_by_params
     return User.find_by_api_access_token(params[:api_access_token]) if params[:api_access_token]
-    auth = request.env["omniauth.auth"]
-    return nil if auth.nil?
-    user = User.find_by_provider_and_uid(auth["provider"], auth["uid"]) || User.create_with_omniauth(auth)
-    user.auth_token = auth['credentials']['token'] if auth['credentials'] && auth['credentials']['token']
+    if CONFIG['GITHUB_INTEGRATION']
+      auth = request.env["omniauth.auth"]
+      return nil if auth.nil?
+      user = User.find_by_provider_and_uid(auth["provider"], auth["uid"]) || User.create_with_omniauth(auth)
+      user.auth_token = auth['credentials']['token'] if auth['credentials'] && auth['credentials']['token']
+    else
+      user = User.find_by_email(params[:email])
+      return nil unless user
+      return nil unless user.authenticate(params[:password])
+    end
     user.times_logged_in = user.times_logged_in + 1
     user.save
     user

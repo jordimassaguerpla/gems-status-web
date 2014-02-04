@@ -14,17 +14,19 @@
   <% end %>
   </ul>
   <br>
-  <strong>Repos in github</strong>
-  <ul>
-  <% @user.repos.each do |r| %>
-      <li>
-       <%= r.name %>
-      </li>
+  <% if CONFIG['GITHUB_INTEGRATION'] %>
+    <strong>Repos in github</strong>
+    <ul>
+    <% @user.repos.each do |r| %>
+        <li>
+         <%= r.name %>
+        </li>
+    <% end %>
+    </ul>
+    <br>
+    <%= link_to "Import repos", user_path(@user) + "/import_repos" %>
+    <br>
   <% end %>
-  </ul>
-  <br>
-  <%= link_to "Import repos", user_path(@user) + "/import_repos" %>
-  <br>
   <strong>API access token: </strong>
   <%= @user.api_access_token %>
   <br>
