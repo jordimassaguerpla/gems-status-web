@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
+ruby '1.9.3'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.2'
@@ -54,4 +55,20 @@ gem 'newrelic_rpm'
 # Use delayed jobs for asynchronously execute longer tasks in the background.
 gem 'delayed_job_active_record'
 gem "daemons"
+ 
+# Heroku integration
+gem 'rails_12factor', group: :production
+
+# Webserver recommended for heroku
+gem 'unicorn'
+
+# Foreman manage Procfile-based applications
+# Heroku requires Procfile
+# thus foreman "simulates" having heroku on development
+gem 'foreman', :group => :development
+
+# Integration with github
+gem 'omniauth-github'
+gem 'octokit'
+
 
