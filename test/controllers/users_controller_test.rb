@@ -36,11 +36,28 @@ class UsersControllerTest < ActionController::TestCase
 
   test "user should not create user" do
     expected = User.count
+    post :create, user: { name: @user.name, email: "new email", password: "secret", password_confirmation: "secret"} 
+    assert_equal expected, User.count
+    assert_redirected_to root_url
+  end
+
+  test "user should not create user with github" do
+    CONFIG['GITHUB_INTEGRATION'] = true
+    expected = User.count
     post :create, user: { name: @user.name, email: "new email"} 
     assert_equal expected, User.count
     assert_redirected_to root_url
   end
+
   test "admin should create user" do
+    session[:user_id] = users(:one)
+    assert_difference("User.count") do
+      post :create, user: { name: @user.name, email: "new email", password: "secret", password_confirmation: "secret"} 
+    end
+    assert_redirected_to user_path(assigns(:user))
+  end
+
+  test "admin should create user with github" do
     session[:user_id] = users(:one)
     assert_difference("User.count") do
       post :create, user: { name: @user.name, email: "new email"} 
