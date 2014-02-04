@@ -98,7 +98,7 @@ class GemsStatusWrapper
 
   def not_a_security_alert_checker(ruby_application)
       return nil if !CONFIG["GMAIL_USERNAME"]
-      return nil if CONFIG["GMAIL_PASSWORD"]
+      return nil if !CONFIG["GMAIL_PASSWORD"]
       return nil if !CONFIG["MAILING_LISTS"]
       source_repos = {}
       SourceRepo.all.to_a.each { |a| source_repos[a.name] = a.url }
@@ -117,7 +117,7 @@ class GemsStatusWrapper
         "source_repos" => source_repos,
         "email_username" => CONFIG["GMAIL_USERNAME"],
         "email_password" => CONFIG["GMAIL_PASSWORD"],
-        "mailing_lists" => CONFIG["MAILING_LISTS"].split,
+        "mailing_lists" => CONFIG["MAILING_LISTS"].split.flatten,
         "email_to" => [ruby_application.user.email]
 
       }
