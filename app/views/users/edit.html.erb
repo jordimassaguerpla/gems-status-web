@@ -1,4 +1,6 @@
 <h1>Editing user</h1>
 
 <%= render 'form' %>
+<%= link_to "Regenerate access token", user_path(@user) + "/generate_access_token" %>
+<br/>
 <%= link_to "Back", users_path %>

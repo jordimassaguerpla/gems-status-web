@@ -10,6 +10,7 @@ GemsStatusWeb::Application.routes.draw do
 
   resources :users do
     get 'import_repos'
+    get :generate_access_token
   end
 
   resources :ruby_applications do

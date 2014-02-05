@@ -20,6 +20,14 @@ class UsersController < ApplicationController
     redirect_to @user, notice: "Import repos action triggered"
   end
 
+  # GET /users/1/generate_access_token
+  def generate_access_token
+    @user = User.find(params[:user_id])
+    @user.generate_access_token!
+    @user.save
+    redirect_to @user, notice: "Access token generated"
+  end
+
   # GET /users/1/edit
   def edit
     @user = User.find(params[:id])

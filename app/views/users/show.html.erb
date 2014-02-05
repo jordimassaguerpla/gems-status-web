@@ -29,6 +29,8 @@
   <% end %>
   <strong>API access token: </strong>
   <%= @user.api_access_token %>
+  <br/>
+  <%= link_to "Regenerate access token", user_path(@user) + "/generate_access_token" %>
   <br>
 </p>
 

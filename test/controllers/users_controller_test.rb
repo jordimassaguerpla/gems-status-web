@@ -7,6 +7,18 @@ class UsersControllerTest < ActionController::TestCase
     session[:user_id] = User.find_by_name("two")
   end
 
+  test "admin should regenerate token" do
+    user = users(:one)
+    session[:user_id] = user.id
+    get :generate_access_token, user_id: user.id
+    assert_redirected_to user
+  end
+
+  test "member should regenerate token" do
+    get :generate_access_token, user_id: @user
+    assert_redirected_to @user
+  end
+
   test "admin should get index" do
     session[:user_id] = users(:one).id
     get :index
@@ -135,6 +147,8 @@ class UsersControllerTest < ActionController::TestCase
     patch :update, id: user, user: { name: user.name, email: user.email }
     assert_equal expected, User.count
     assert_redirected_to root_url
+    get :generate_access_token, user_id: user
+    assert_redirected_to root_url
   end
   test "a non-beta user should not do anything" do
     session[:user_id] = users(:four)
@@ -150,6 +164,9 @@ class UsersControllerTest < ActionController::TestCase
     assert_redirected_to root_url
     patch :update, id: @user, user: { name: @user.name, email: @user.email }
     assert_equal expected, User.count
+    assert_redirected_to root_url
+    user = users(:four)
+    get :generate_access_token, user_id: user
     assert_redirected_to root_url
   end
 end

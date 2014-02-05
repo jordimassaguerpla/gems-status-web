@@ -1,7 +1,7 @@
 require "open-uri"
 
 class User < ActiveRecord::Base
-  before_create :generate_access_token
+  before_create :generate_access_token!
   has_many :ruby_applications
   has_many :repos
   validates :name, presence: true
@@ -68,13 +68,13 @@ class User < ActiveRecord::Base
     end
   end
 
-  private
-
-  def generate_access_token
+  def generate_access_token!
     begin
       self.api_access_token = SecureRandom.hex
     end while self.class.exists?(api_access_token: api_access_token)
   end
+
+  private
 
   def self.create_with_omniauth(auth)
     create! do |user|
