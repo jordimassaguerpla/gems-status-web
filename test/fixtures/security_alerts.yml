@@ -13,3 +13,10 @@ two:
   version_fix: 2.2.2
   ruby_application: :two
   status: 0
+
+three:
+  ruby_gem: :three
+  desc: three
+  version_fix: 1.1.1
+  ruby_application: :one
+  status: 1

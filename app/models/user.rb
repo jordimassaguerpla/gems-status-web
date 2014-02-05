@@ -14,6 +14,14 @@ class User < ActiveRecord::Base
     repos.collect(&:name)
   end
 
+  def reviewed_sa
+    counter = 0
+    ruby_applications.each do |ra|
+      counter = counter + ra.security_alerts.where("status != 0").count
+    end
+    counter
+  end
+
   def import_repos
     return unless auth_token
     Rails.logger.debug "initializing octokit"

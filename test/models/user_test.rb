@@ -11,4 +11,10 @@ class UserTest < ActiveSupport::TestCase
     after = u.api_access_token
     assert_not_equal(b4, after)
   end
+  test "reviewed_sa" do
+    u = users(:one)
+    assert_equal 1, u.reviewed_sa
+    u = users(:two)
+    assert_equal 0, u.reviewed_sa
+  end
 end
