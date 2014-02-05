@@ -2,6 +2,7 @@ require 'test_helper'
 
 class RubyApplicationsControllerTest < ActionController::TestCase
   setup do
+    @request.env['HTTPS'] = 'on'
     CONFIG["MAX_RUBY_APP_BY_USER"] = -1
     @ruby_application = ruby_applications(:two)
     session[:user_id] = users(:two)

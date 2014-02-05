@@ -1,6 +1,9 @@
 require 'test_helper'
 
 class ReportsControllerTest < ActionController::TestCase
+  setup do
+    @request.env['HTTPS'] = 'on'
+  end
   test "redirect if no current_user" do
     session[:user_id] = nil
     get :index

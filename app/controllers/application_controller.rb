@@ -11,6 +11,8 @@ class ApplicationController < ActionController::Base
   helper_method :user_by_params
   helper_method :beta_user?
 
+  force_ssl
+
   def current_user
     @current_user ||= (session_user || user_by_params)
   end

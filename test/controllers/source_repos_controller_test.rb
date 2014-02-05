@@ -2,6 +2,7 @@ require 'test_helper'
 
 class SourceReposControllerTest < ActionController::TestCase
   setup do
+    @request.env['HTTPS'] = 'on'
     @source_repo = source_repos(:one)
     session[:user_id] = User.find_by_name("one")
   end

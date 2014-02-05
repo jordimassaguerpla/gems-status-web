@@ -2,6 +2,7 @@ require 'test_helper'
 
 class SecurityAlertsControllerTest < ActionController::TestCase
   setup do
+    @request.env['HTTPS'] = 'on'
     @security_alert = security_alerts(:one)
     session[:user_id] = users(:one).id
   end

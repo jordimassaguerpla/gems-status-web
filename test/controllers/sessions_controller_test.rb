@@ -7,6 +7,9 @@ class User
 end
 
 class SessionsControllerTest < ActionController::TestCase
+  setup do
+    @request.env['HTTPS'] = 'on'
+  end
 
   test "should get new" do
     get :new

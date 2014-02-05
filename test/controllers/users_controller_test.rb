@@ -2,6 +2,7 @@ require 'test_helper'
 
 class UsersControllerTest < ActionController::TestCase
   setup do
+    @request.env['HTTPS'] = 'on'
     @user = users(:two)
     session[:user_id] = User.find_by_name("two")
   end
