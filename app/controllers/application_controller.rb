@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
   helper_method :user_by_params
   helper_method :beta_user?
 
-  force_ssl
+  force_ssl unless Rails.env == "development"
 
   def current_user
     @current_user ||= (session_user || user_by_params)
@@ -83,6 +83,7 @@ class ApplicationController < ActionController::Base
     return false if current_user && params[:controller] == "security_alerts" && params[:id] && current_user.ruby_applications.include?(SecurityAlert.find(params[:id]).ruby_application)
     return false if current_user && params[:controller] == "users" && params[:id] && params[:id] == current_user.id.to_s && params[:action] == "show"
     return false if current_user && params[:controller] == "users" && params[:user_id] && params[:user_id] == current_user.id.to_s && params[:action] == "import_repos"
+    return false if current_user && params[:controller] == "users" && params[:user_id] && params[:user_id] == current_user.id.to_s && params[:action] == "generate_access_token"
     true
   end
 
