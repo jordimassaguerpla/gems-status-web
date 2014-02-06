@@ -1,9 +1,13 @@
 <p>
 <% RubyApplication.all.each do |ra|%>
+  <% next unless ra.user %>
   <%= ra.user.name %>(<%= ra.user.email %>): <%= ra.name %><br>
   <ul>
+    <% next unless ra.ruby_gems %>
     <% ra.ruby_gems.each do |rg| %>
+      <% next unless rg %>
       <li><%= rg.name %> <%= rg.version %> <%= rg.license %></li>
+      <% next unless ra.security_alerts %>
         <table>
           <% ra.security_alerts.find_all_by_ruby_gem_id(rg.id).each do |sa| %>
             <% next if sa.version_fix && sa.version_fix != "" && Gem::Version.new(sa.version_fix) <= Gem::Version.new(rg.version) %>
