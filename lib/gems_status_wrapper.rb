@@ -82,14 +82,20 @@ class GemsStatusWrapper
         puts s
       end
       extid = s["extid"]?s["ext_id"]:"#{parent_server}_#{s["id"].to_s}"
-      next if SecurityAlert.find_by_extid(extid)
-      new_sa = SecurityAlert.new(
-        :extid => extid,
-        :desc => s["desc"],
-        :version_fix => s["version_fix"],
-        :status => s["status"],
-        :comment => s["comment"]
-      )
+      new_sa = SecurityAlert.find_by_extid(extid)
+      if !new_sa
+        new_sa = SecurityAlert.new(
+          :extid => extid,
+          :desc => s["desc"],
+          :version_fix => s["version_fix"],
+          :status => s["status"],
+          :comment => s["comment"]
+        )
+      else
+        new_sa.version_fix = s["version_fix"]
+        new_sa.status = s["status"]
+        new_sa.comment = s["comment"]
+      end
       new_sa.save
     end
   end
