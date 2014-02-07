@@ -40,7 +40,7 @@ class GemsStatusWrapper
       gemfile = open(ruby_application.filename) {|f| f.read }
       File.open(local_filename, "w") {|f| f.write(gemfile)}
     rescue
-      puts "ERROR: Problems getting #{ruby_application.name} and saving it to #{local_filename}"
+      Rails.logger.error "Problems getting #{ruby_application.name} and saving it to #{local_filename}"
       return
     end
     conf = {
@@ -56,14 +56,14 @@ class GemsStatusWrapper
     insert_into_database(runner, ruby_application)
     lr = LastRun.new
     if !lr.save
-      puts "ERROR: There was a problem saving #{lr}"
+      Rails.logger.error "There was a problem saving #{lr}"
     end
   end
 
   def insert_similars(sa)
     return unless sa
     if !CONFIG["PARENT_SERVER"] || !CONFIG["PARENT_SERVER_API_ACCESS_TOKEN"]
-      puts "DEBUG: no parent server configuration"
+      Rails.logger.debug "no parent server configuration"
       return
     end
     parent_server = CONFIG["PARENT_SERVER"]
@@ -73,13 +73,13 @@ class GemsStatusWrapper
       url = URI::Parser.new.escape("#{parent_server}/sa_similars.json?api_access_token=#{parent_server_api_access_token};desc=#{sa.desc}")
       similars = JSON.parse(open(url).read)
     rescue Exception => e
-      puts "ERROR: I could not find similars #{e}"
+      Rails.logger.error "I could not find similars #{e}"
       return
     end
     similars.each do |s|
       if !s["id"] || !s["desc"]
-        puts "ERROR: missing fields in json response from #{parent_server}"
-        puts s
+        Rails.logger.error "missing fields in json response from #{parent_server}"
+        Rails.logger.error s
       end
       extid = s["extid"]?s["ext_id"]:"#{parent_server}_#{s["id"].to_s}"
       new_sa = SecurityAlert.find_by_extid(extid)
@@ -131,16 +131,16 @@ class GemsStatusWrapper
   end
 
   def insert_into_database(runner, ruby_application)
-    puts "DEBUG: ------- Inserting into database -----------------"
+    Rails.logger.debug "------- Inserting into database -----------------"
     insert_gems(runner, ruby_application)
     insert_alerts(runner, ruby_application)
   end
 
   def insert_gems(runner, ruby_application)
-    puts "DEBUG: Inserting gems"
+    Rails.logger.debug "Inserting gems"
     ruby_application.ruby_gems.delete_all
     runner.gem_list.each do |name, gem|
-      puts "DEBUG: #{name}"
+      Rails.logger.debug "#{name}"
       rg = RubyGem.find_by(:name => gem.name, :version => gem.version.to_s)
       if rg.nil?
         rg = RubyGem.new
@@ -149,29 +149,29 @@ class GemsStatusWrapper
         rg.license = gem.license
         rg.ruby_applications = [ruby_application]
         if !rg.save
-          puts "ERROR: There was a problem inserting #{name} gem into the database"
+          Rails.logger.error "There was a problem inserting #{name} gem into the database"
         end
       else
         rg.ruby_applications << ruby_application unless rg.ruby_applications.include? ruby_application
         if !rg.save
-          puts "ERROR: There was a problem inserting #{name} gem into the database"
+          Rails.logger.error "There was a problem inserting #{name} gem into the database"
         end
       end
     end
   end
 
   def insert_alerts(runner, ruby_application)
-    puts "DEBUG: Inserting alerts"
+    Rails.logger.debug "Inserting alerts"
     runner.checker_results.each do |_, alerts|
       alerts.each do |alert|
         alert.security_messages.each do |sec_key, message|
           desc= message.desc.gsub("'","-").gsub('"',"-")
           gem = alert.gem
-          puts "DEBUG: Adding alert for #{gem.name}"
+          Rails.logger.debug "Adding alert for #{gem.name}"
           rg = RubyGem.find_by(:name => gem.name, :version => gem.version.to_s)
           if rg.nil?
-            puts "ERROR: I could not find #{gem.name} : #{gem.version.to_s}"
-            exit -1
+            Rails.logger.error "I could not find #{gem.name} : #{gem.version.to_s}"
+            next
           end
           sa = SecurityAlert.find_by(:sec_key => sec_key)
           sa = SecurityAlert.new if sa.nil?
@@ -183,7 +183,7 @@ class GemsStatusWrapper
           sa.comment = ""
           sa.sec_key = sec_key
           if !sa.save
-            puts "ERROR: There was a problem inserting #{sa.sec_key} into the database"
+            Rails.logger.error "There was a problem inserting #{sa.sec_key} into the database"
           end
           insert_similars(sa)
         end
