@@ -45,11 +45,11 @@ gem 'capistrano-bundler', group: :development
 gem 'capistrano-rails', group: :development
 
 # Use debugger
-# gem 'debugger', group: [:development, :test]
 gem 'simplecov', :require => false, :group => :test
 gem 'coveralls', :require => false, :group => :test
 gem 'gems-status'
-gem 'debugger', :group => :development
+# gem 'debugger', :group => :development
+gem 'debugger'
 gem 'newrelic_rpm'
 
 # Use delayed jobs for asynchronously execute longer tasks in the background.
