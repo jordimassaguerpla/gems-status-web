@@ -124,9 +124,13 @@ class GemsStatusWrapper
         "email_username" => CONFIG["GMAIL_USERNAME"],
         "email_password" => CONFIG["GMAIL_PASSWORD"],
         "mailing_lists" => CONFIG["MAILING_LISTS"].split.flatten,
-        "email_to" => [ruby_application.user.email]
-
       }
+      if user.receive_emails?
+        conf["email_to"] = [ruby_application.user.email]
+      else
+        conf["email_to"] = []
+      end
+
       GemsStatus::NotASecurityAlertChecker.new(conf)
   end
 

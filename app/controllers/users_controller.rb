@@ -28,6 +28,22 @@ class UsersController < ApplicationController
     redirect_to @user, notice: "Access token generated"
   end
 
+  # GET /users/1/switch_on_email
+  def switch_on_email
+    @user = User.find(params[:user_id])
+    @user.receive_emails = 1
+    @user.save
+    redirect_to @user
+  end
+
+  # GET /users/1/switch_off_email
+  def switch_off_email
+    @user = User.find(params[:user_id])
+    @user.receive_emails = 0
+    @user.save
+    redirect_to @user
+  end
+
   # GET /users/1/edit
   def edit
     @user = User.find(params[:id])

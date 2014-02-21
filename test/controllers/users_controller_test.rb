@@ -19,6 +19,38 @@ class UsersControllerTest < ActionController::TestCase
     assert_redirected_to @user
   end
 
+  test "admin should switch off email" do
+    user = users(:one)
+    session[:user_id] = user.id
+    get :switch_off_email, user_id: user.id
+    user = User.find user.id
+    assert_redirected_to user
+    assert !user.receive_emails?
+  end
+
+  test "member should switch off email" do
+    get :switch_off_email, user_id: @user
+    user = User.find @user.id
+    assert_redirected_to @user
+    assert !user.receive_emails?
+  end
+
+  test "admin should switch on email" do
+    user = users(:one)
+    session[:user_id] = user.id
+    get :switch_on_email, user_id: user.id
+    user = User.find user.id
+    assert_redirected_to user
+    assert user.receive_emails?
+  end
+
+  test "member should switch on email" do
+    get :switch_on_email, user_id: @user
+    user = User.find @user.id
+    assert_redirected_to @user
+    assert user.receive_emails?
+  end
+
   test "admin should get index" do
     session[:user_id] = users(:one).id
     get :index
@@ -149,6 +181,10 @@ class UsersControllerTest < ActionController::TestCase
     assert_redirected_to root_url
     get :generate_access_token, user_id: user
     assert_redirected_to root_url
+    get :switch_on_email, user_id: user
+    assert_redirected_to root_url
+    get :switch_off_email, user_id: user
+    assert_redirected_to root_url
   end
   test "a non-beta user should not do anything" do
     session[:user_id] = users(:four)
@@ -167,6 +203,12 @@ class UsersControllerTest < ActionController::TestCase
     assert_redirected_to root_url
     user = users(:four)
     get :generate_access_token, user_id: user
+    assert_redirected_to root_url
+    user = users(:four)
+    get :switch_off_email, user_id: user
+    assert_redirected_to root_url
+    user = users(:four)
+    get :switch_on_email, user_id: user
     assert_redirected_to root_url
   end
 end

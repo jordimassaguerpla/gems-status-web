@@ -84,6 +84,8 @@ class ApplicationController < ActionController::Base
     return false if current_user && params[:controller] == "users" && params[:id] && params[:id] == current_user.id.to_s && params[:action] == "show"
     return false if current_user && params[:controller] == "users" && params[:user_id] && params[:user_id] == current_user.id.to_s && params[:action] == "import_repos"
     return false if current_user && params[:controller] == "users" && params[:user_id] && params[:user_id] == current_user.id.to_s && params[:action] == "generate_access_token"
+    return false if current_user && params[:controller] == "users" && params[:user_id] && params[:user_id] == current_user.id.to_s && params[:action] == "switch_off_email"
+    return false if current_user && params[:controller] == "users" && params[:user_id] && params[:user_id] == current_user.id.to_s && params[:action] == "switch_on_email"
     true
   end
 

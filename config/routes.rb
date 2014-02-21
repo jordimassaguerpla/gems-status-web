@@ -11,6 +11,8 @@ GemsStatusWeb::Application.routes.draw do
   resources :users do
     get 'import_repos'
     get :generate_access_token
+    get :switch_off_email
+    get :switch_on_email
   end
 
   resources :ruby_applications do

@@ -32,5 +32,10 @@
   <br/>
   <%= link_to "Regenerate access token", user_path(@user) + "/generate_access_token" %>
   <br>
+  <% if @user.receive_emails? %>
+    <%= link_to "Stop receiving emails", user_path(@user) + "/switch_off_email" %>
+  <% else %>
+    <%= link_to "Start receiving emails", user_path(@user) + "/switch_on_email" %>
+  <% end %>
 </p>
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140204144553) do
+ActiveRecord::Schema.define(version: 20140221083156) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -102,6 +102,7 @@ ActiveRecord::Schema.define(version: 20140204144553) do
     t.string   "auth_token"
     t.integer  "times_logged_in",  default: 0
     t.string   "password_digest"
+    t.integer  "receive_emails",   default: 1
   end
 
 end
