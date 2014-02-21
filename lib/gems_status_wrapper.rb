@@ -125,7 +125,7 @@ class GemsStatusWrapper
         "email_password" => CONFIG["GMAIL_PASSWORD"],
         "mailing_lists" => CONFIG["MAILING_LISTS"].split.flatten,
       }
-      if user.receive_emails?
+      if ruby_application.user.receive_emails?
         conf["email_to"] = [ruby_application.user.email]
       else
         conf["email_to"] = []
