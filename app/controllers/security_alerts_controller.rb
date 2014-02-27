@@ -18,7 +18,7 @@ class SecurityAlertsController < ApplicationController
   def update
     respond_to do |format|
       if @security_alert.update(security_alert_params)
-        format.html { redirect_to @security_alert, notice: 'Security alert was successfully updated.' }
+        format.html { redirect_to home_path, notice: 'Security alert was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }

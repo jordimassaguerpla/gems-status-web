@@ -19,7 +19,7 @@ class SecurityAlertsControllerTest < ActionController::TestCase
 
   test "should update security alert" do
     patch :update, id: @security_alert, security_alert: { comment: @security_alert.comment, status: @security_alert.status, desc: @security_alert.desc, version_fix: @security_alert.version_fix }
-    assert_redirected_to security_alert_path(assigns(:security_alert))
+    assert_redirected_to home_path
   end
 
   test "role security team should see" do
