@@ -48,8 +48,7 @@ gem 'capistrano-rails', group: :development
 gem 'simplecov', :require => false, :group => :test
 gem 'coveralls', :require => false, :group => :test
 gem 'gems-status'
-# gem 'debugger', :group => :development
-gem 'debugger'
+gem 'debugger', :group => :development
 gem 'newrelic_rpm'
 
 # Use delayed jobs for asynchronously execute longer tasks in the background.
